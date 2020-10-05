@@ -1,6 +1,6 @@
 
 NAME= mini.a
-SRC= raycasting.c utils.c 
+SRC= cub3d.c utils.c 
 SRC+= 
 OBJ1=$(SRC:.c=.o)
 OBJ=$(OBJ1:.m=.o)

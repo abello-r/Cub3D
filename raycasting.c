@@ -25,9 +25,12 @@ int		main(void)
 		rayCount++;
 		rayAngle++;
 	}
+	printf("%3.f\n", rayAngle);
+	//rayCos = cos(rayAngle * M_PI / 180);
 	rayCos = cos(rayAngle * M_PI / 180);
 
-	printf("%f", rayCos);
-	printf("\n%d", rayCount);
+	printf("%.3f raycos", rayCos);
+	printf("\n%d raycount", rayCount);
 	return(0);
 }
+
