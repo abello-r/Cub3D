@@ -14,22 +14,18 @@
 # define KEY_RIGHT			124
 # define KEY_LEFT			123
 
-# define COLOR				0xffffff
-# define COLOR1				0x00ff00
 /*----------------------------------------------------*/
 
-typedef struct	s_data
+typedef struct	s_data // Pantalla e imagén.
 {
+	void	*mlx;
+	void	*win;
 	void 	*img;
 	char 	*addr;
 	int 	bits_per_pixel;
-	int 	line_lenght;
+	int 	line_lenght; 
 	int 	endian;
 
-	void	*mlx;
-	void	*win;
-	int		x;
-	int		y;
 	int		up_switch; // Arriba
 	int		down_switch; // Abajo
 	int		left_switch; // Izquierda
@@ -39,7 +35,7 @@ typedef struct	s_data
 
 /*----------------------------------------------------*/
 
-typedef struct	s_player
+typedef struct	s_player // Datos de Jugador
 {
 	int		*N; // Jugador
 
@@ -73,12 +69,23 @@ typedef struct	s_player
 	double	deltaDistY; //Distancia que el rayo tiene que viajar para ir de 1 lado y al siguiente lado y.
 
 	double	perpWallDist;
+	double	time; // Tiempo del fps actual.
+	double	old_time;	// Tiempo previo del fps.
 
 
 }				t_player;
 
 /*----------------------------------------------------*/
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+typedef	struct	s_global // Conjunto de estructuras.
+{
+	t_data		data; // Datos de imagen y teclas.
+	t_player	player; // Datos del jugador.
+
+}				t_global;
+
+/*----------------------------------------------------*/
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
 
 #endif
