@@ -9,10 +9,17 @@
 # include <mlx.h>
 # include <math.h>
 
-# define KEY_UP				126
-# define KEY_DOWN			125
-# define KEY_RIGHT			124
-# define KEY_LEFT			123
+# define KEY_UP				126 // Arriba.
+# define KEY_DOWN			125 // Abajo.
+# define KEY_RIGHT			124 // Derecha.
+# define KEY_LEFT			123 // Izquierda.
+
+# define mapWidth			24	// Ancho del mapa.
+# define mapHeight			24	// Alto del mapa.
+
+# define RGB_Red			0000000
+# define RGB_Green			0,255,0
+# define RGB_Yellow			255,255,0
 
 /*----------------------------------------------------*/
 
@@ -30,6 +37,7 @@ typedef struct	s_data // Pantalla e imagén.
 	int		down_switch; // Abajo
 	int		left_switch; // Izquierda
 	int		right_switch; // Derecha
+	int		color;
 
 }				t_data;
 
@@ -71,6 +79,10 @@ typedef struct	s_player // Datos de Jugador
 	double	perpWallDist;
 	double	time; // Tiempo del fps actual.
 	double	old_time;	// Tiempo previo del fps.
+
+	int		line_height; // Altura de la linea.
+	int		drawStart; // Dónde empezar a dibujar.
+	int		drawEnd; // Dónde terminar.
 
 
 }				t_player;
