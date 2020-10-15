@@ -32,8 +32,9 @@ int main (void)
 };
 
 	t_global global;
-	t_player player;
+
 	int x = 0; 
+	int y = 0;
 	double w = 1920;
 
 	global.data.mlx		= mlx_init();
@@ -42,102 +43,111 @@ int main (void)
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
 	// Asignación de valores.
-	player.posX =	22;
-	player.posY =	12;
-	player.dirX =	-1;
-	player.dirY =	0;
-	player.planeX =	0;
-	player.planeY =	0.66;
-	player.time =	0;
-	player.old_time	= 0;
-
-
+	global.player.posX =	22;
+	global.player.posY =	12;
+	global.player.dirX =	-1;
+	global.player.dirY =	0;
+	global.player.planeX =	0;
+	global.player.planeY =	0.66;
+	global.player.time =	0;
+	global.player.old_time	= 0;
 
 	while(x < w) // revisar las variables aquí
 	{
-		x++;
-		player.cameraX = 2 * x / w - 1;
-		player.rayDirX = player.dirX + player.planeX * player.cameraX;
-		player.rayDirY = player.dirY + player.planeY * player.cameraX;
-	}
-	
-	player.mapX = player.posX; // Posición en el mapa eje x.
-	player.mapY = player.posY; // Posición en el mapa eje y.
+		global.player.cameraX = 2 * x / w - 1;
+		global.player.rayDirX = global.player.dirX + global.player.planeX * global.player.cameraX;
+		global.player.rayDirY = global.player.dirY + global.player.planeY * global.player.cameraX;
 
-	player.deltaDistX = fabs(1 / player.rayDirX); // Longitud del rayo desde un lado x a otro lado x.
-	player.deltaDistY = fabs(1 / player.rayDirY); // Longitud del rayo desde un lado y a otro lado y.
+		global.player.mapX = (int)global.player.posX; // Posición en el mapa eje x.
+		global.player.mapY = (int)global.player.posY; // Posición en el mapa eje y.
 
-	if (player.rayDirY < 0)
-	{
-		player.stepX = -1;
-		player.sideDistX = (player.posX - player.mapX) * player.deltaDistX;
-	}
-	else
-	{
-		player.stepX = 1;
-		player.sideDistX = (player.mapX + 1.0 - player.posX) * player.deltaDistX;
-	}
-	if (player.rayDirY < 0)
-	{
-		player.stepY = -1;
-		player.sideDistY = (player.posY - player.mapY) * player.deltaDistY;
-	}
-	else
-	{
-		player.stepY = 1;
-		player.sideDistY = (player.mapY + 1.0 - player.posY) * player.deltaDistY;
-	}
+		global.player.deltaDistX = fabs(1 / global.player.rayDirX); // Longitud del rayo desde un lado x a otro lado x.
+		global.player.deltaDistY = fabs(1 / global.player.rayDirY); // Longitud del rayo desde un lado y a otro lado y.
+		global.player.hit = 0;
 
-	while (player.hit == 0)
-	{
-		if (player.sideDistX < player.sideDistY)
+		if (global.player.rayDirX < 0)
 		{
-			player.sideDistX += player.deltaDistX;
-			player.mapX += player.stepX;
-			player.side = 0;
-			//break; // esto va aquí mientras soluciono lo del mapa, ojito (no recuerdo por que puse esto)
+			global.player.stepX = -1;
+			global.player.sideDistX = (global.player.posX - global.player.mapX) * global.player.deltaDistX;
 		}
 		else
 		{
-			player.sideDistY += player.deltaDistX;
-			player.mapY += player.stepY;
-			player.side = 1;
+			global.player.stepX = 1;
+			global.player.sideDistX = (global.player.mapX + 1.0 - global.player.posX) * global.player.deltaDistX;
 		}
-		if (worldMap[player.mapX][player.mapY] > 0) 
-			player.hit = 1;
-	}
-
-		if (player.side == 0)
+		if (global.player.rayDirY < 0)
 		{
-			player.perpWallDist = (player.mapX - player.posX + (1 - player.stepX) / 2) / player.rayDirX;
+			global.player.stepY = -1;
+			global.player.sideDistY = (global.player.posY - global.player.mapY) * global.player.deltaDistY;
 		}
 		else
 		{
-			player.perpWallDist = (player.mapY - player.posY + (1 - player.stepY) / 2) / player.rayDirY;
+			global.player.stepY = 1;
+			global.player.sideDistY = (global.player.mapY + 1.0 - global.player.posY) * global.player.deltaDistY;
 		}
-
-		global.player.line_height = (1080 / player.perpWallDist); // Calcula la altura de la linea a pintar.
-		
+			//write(1, "a", 1);
+		while (global.player.hit == 0)
+		{
+			if (global.player.sideDistX < global.player.sideDistY)
+			{
+				global.player.sideDistX += global.player.deltaDistX;
+				global.player.mapX += global.player.stepX;
+				global.player.side = 0;
+				//break; // esto va aquí mientras soluciono lo del mapa, ojito (no recuerdo por que puse esto)
+			}
+		else
+		{
+			global.player.sideDistY += global.player.deltaDistX;
+			global.player.mapY += global.player.stepY;
+			global.player.side = 1;
+		}
+		if (worldMap[global.player.mapX][global.player.mapY] > 0) 
+			global.player.hit = 1;
+		}
+		if (global.player.side == 0)
+		{
+			global.player.perpWallDist = (global.player.mapX - global.player.posX + (1 - global.player.stepX) / 2) / global.player.rayDirX;
+		}
+		else
+		{
+			global.player.perpWallDist = (global.player.mapY - global.player.posY + (1 - global.player.stepY) / 2) / global.player.rayDirY;
+		}
+		/*global.player.line_height = (1080 / player.perpWallDist); // Calcula la altura de la linea a pintar.
 		global.player.drawStart = -global.player.line_height / 2 + 1080 / 2;
 		global.player.drawStart = (global.player.drawStart < 0) ? 0 : global.player.drawStart;
 		global.player.drawEnd = global.player.line_height / 2 + 1080 / 2;
-		global.player.drawEnd = (global.player.drawEnd >= 1080) ? 1080 - 1 : global.player.drawEnd;
+		global.player.drawEnd = (global.player.drawEnd >= 1080) ? 1080 - 1 : global.player.drawEnd;*/
+		
+		global.player.line_height = (1080 / global.player.perpWallDist); // Calcula la altura de la linea a pintar.
+		global.player.drawStart = -global.player.line_height / 2 + 1080 / 2;
+		if (global.player.drawStart < 0)
+			global.player.drawStart = 0;
+		global.player.drawEnd = global.player.line_height / 2 + 1080 / 2;
+		if (global.player.drawEnd >= 1080)
+			global.player.drawEnd = 1080 - 1;
 
-		switch(worldMap[player.mapX][player.mapY]) // Switch no está permitido, recuerda que esto es temporal.
+		switch(worldMap[global.player.mapX][global.player.mapY]) // Switch no está permitido, recuerda que esto es temporal.
 		{
 			case 1: global.data.color = RGB_Red; break;
 			case 2: global.data.color = RGB_Green; break;
 			default: global.data.color = RGB_Yellow; break;
 		}
-		if (player.side == 1) // Esto es para darle un brillo diferente al chocar con una pared.
+		if (global.player.side == 1) // Esto es para darle un brillo diferente al chocar con una pared.
 		{
 			global.data.color = global.data.color / 2;
 		}
-		mlx_pixel_put(global.data.mlx, global.data.win, global.player.drawStart, global.player.drawEnd, global.data.color);
-
-		global.player.old_time = global.player.time;
-		global.player.time = 10;
-
+		y = global.player.drawStart;
+		//write(1, ft_itoa(y), 4);
+		while(y < global.player.drawEnd)
+		{
+			//write(1, "b", 1);
+			my_mlx_pixel_put(&global.data, x, y, 0xff0000);
+			y++;
+		}
+		x++;
+	}
+		//global.player.old_time = global.player.time;
+		//global.player.time = 10;
 		mlx_put_image_to_window(global.data.mlx, global.data.win, global.data.img, 0, 0);
 		mlx_loop(global.data.mlx);
 }
