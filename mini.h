@@ -9,17 +9,15 @@
 # include <mlx.h>
 # include <math.h>
 
-# define KEY_UP				126 // Arriba.
-# define KEY_DOWN			125 // Abajo.
-# define KEY_RIGHT			124 // Derecha.
+# define KEY_UP				13 // Arriba.
+# define KEY_DOWN			1 // Abajo.
+# define KEY_RIGHT			2 // Derecha.
 # define KEY_LEFT			123 // Izquierda.
+# define ESCAPE				53 // Tecla ESCAPE.
 
 # define mapWidth			24	// Ancho del mapa.
 # define mapHeight			24	// Alto del mapa.
 
-# define RGB_Red			0000000
-# define RGB_Green			0,255,0
-# define RGB_Yellow			255,255,0
 
 /*----------------------------------------------------*/
 
@@ -52,6 +50,8 @@ typedef struct	s_player // Datos de Jugador
 
 	double	dirX; // Vector de dirección inicial en x.
 	double	dirY; // Vector de dirección inicial en y.
+	double	oldDirX;
+	double	oldPlaneX;
 
 	double	rayDirX; //Dirección del rayo en x.
 	double	rayDirY; //Dirección del rayo en y.
@@ -77,12 +77,13 @@ typedef struct	s_player // Datos de Jugador
 	double	deltaDistY; //Distancia que el rayo tiene que viajar para ir de 1 lado y al siguiente lado y.
 
 	double	perpWallDist;
-	double	time; // Tiempo del fps actual.
-	double	old_time;	// Tiempo previo del fps.
 
 	int		line_height; // Altura de la linea.
 	int		drawStart; // Dónde empezar a dibujar.
 	int		drawEnd; // Dónde terminar.
+
+	double	moveSpeed; // Velocidad del movimiento vectorial.
+	double	rotSpeed; // Velocidad del movimiento de rotación.
 
 
 }				t_player;
@@ -99,5 +100,6 @@ typedef	struct	s_global // Conjunto de estructuras.
 /*----------------------------------------------------*/
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
+int		key_move(int keycode, t_global *global);
 
 #endif

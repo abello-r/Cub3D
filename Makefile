@@ -30,6 +30,8 @@ clean:
 	@clear
 	@echo "\n\033[32m"*------------------------------------------------------------------------------------*\\nBorrando los siguientes ficheros :\\n"\033[33m"$(NAME) $(OBJ) libft.a libmlx.a ./a.out a.out.dSYM"\033[0m\n"
 	@echo "\n\033[32m"Todo depurado correctamente ✅\\n*------------------------------------------------------------------------------------*\\n"\033[0m\n"
+
+fclean: clean
 	
 re: clean all
 
