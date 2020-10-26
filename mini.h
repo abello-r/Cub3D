@@ -11,7 +11,7 @@
 
 # define KEY_UP				13 // Arriba.
 # define KEY_DOWN			1 // Abajo.
-# define KEY_RIGHT			2 // Derecha.
+# define KEY_RIGHT			124 // Derecha.
 # define KEY_LEFT			123 // Izquierda.
 # define ESCAPE				53 // Tecla ESCAPE.
 

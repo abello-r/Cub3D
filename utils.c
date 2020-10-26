@@ -42,29 +42,18 @@ int		key_move(int keycode, t_global *global)
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-	global->player.moveSpeed = 0.2 * 5.0; // Aumentando el 0.5 damos más velocidad al movimiento vectorial.
-	global->player.rotSpeed = 0.2 * 3.0; // Aquí pasa igual pero con el movimiento de rotación.
+	global->player.moveSpeed = 0.1 * 5.0; // Aumentando el 0.1 damos más velocidad al movimiento vectorial.
+	global->player.rotSpeed = 0.1 * 3.0; // Aquí pasa igual pero con el movimiento de rotación.
 	printf("%d\n", keycode);
 
-	if (keycode == ESCAPE) // Escape.
+	if (keycode == ESCAPE) // Escape REVISADA
 	{
 		mlx_clear_window(global->data.mlx, global->data.win);
 		mlx_destroy_window(global->data.mlx, global->data.win);
 		exit(0);
 	}
 
-	if (keycode == KEY_DOWN) // Mover Abajo
-	{
-		if (!worldMap[(int)(global->player.posX + global->player.dirX * global->player.moveSpeed)][(int)global->player.posY])
-		{
-			global->player.posX -= global->player.dirX * global->player.moveSpeed;
-		} 
-		if (!worldMap[(int)global->player.posX][(int)(global->player.posY - global->player.dirY * global->player.moveSpeed)])
-		{
-			global->player.posY -= global->player.dirY * global->player.moveSpeed;
-		}
-	}
-	if (keycode == KEY_UP) // Mover Arriba
+	if (keycode == KEY_UP) // Mover Arriba REVISADA
 	{
 		if (!worldMap[(int)(global->player.posX + global->player.dirX * global->player.moveSpeed)][((int)global->player.posY)])
 		{
@@ -75,22 +64,37 @@ int		key_move(int keycode, t_global *global)
 			global->player.posY += global->player.dirY * global->player.moveSpeed;
 		}
 	}
+	if (keycode == KEY_DOWN) // Mover Abajo REVISADA
+	{
+		if (!worldMap[(int)(global->player.posX - global->player.dirX * global->player.moveSpeed)][(int)global->player.posY])
+		{
+			global->player.posX -= global->player.dirX * global->player.moveSpeed;
+		} 
+		if (!worldMap[(int)global->player.posX][(int)(global->player.posY - global->player.dirY * global->player.moveSpeed)])
+		{
+			global->player.posY -= global->player.dirY * global->player.moveSpeed;
+		}
+	}
 	
-	if (keycode == KEY_RIGHT) // Rotar a la Derecha
+	if (keycode == KEY_RIGHT) // Rotar a la Derecha REVISADA
 	{
 		global->player.oldDirX = global->player.dirX;
 		global->player.dirX = global->player.dirX * cos(-global->player.rotSpeed) - global->player.dirY * sin(-global->player.rotSpeed);
-		global->player.dirY = global->player.dirX * sin(-global->player.rotSpeed) + global->player.dirY * cos(-global->player.rotSpeed);
+		global->player.dirY = global->player.oldDirX * sin(-global->player.rotSpeed) + global->player.dirY * cos(-global->player.rotSpeed);
 		global->player.oldPlaneX = global->player.planeX;
 		global->player.planeX = global->player.planeX * cos(-global->player.rotSpeed) - global->player.planeY * sin(-global->player.rotSpeed);
 		global->player.planeY = global->player.oldPlaneX * sin(-global->player.rotSpeed) + global->player.planeY * cos(-global->player.rotSpeed);
 	}
-	if (keycode == KEY_LEFT) // Rotar a la Izquierda
+	if (keycode == KEY_LEFT) // Rotar a la Izquierda REVISADA
 	{
-
+		global->player.oldDirX = global->player.dirX;
+		global->player.dirX = global->player.dirX * cos(global->player.rotSpeed) - global->player.dirY * sin(global->player.rotSpeed);
+		global->player.dirY = global->player.oldDirX * sin(global->player.rotSpeed) + global->player.dirY * cos(global->player.rotSpeed);
+		global->player.oldPlaneX = global->player.planeX;
+		global->player.planeX = global->player.planeX * cos(global->player.rotSpeed) - global->player.planeY * sin(global->player.rotSpeed);
+		global->player.planeY = global->player.oldPlaneX * sin(global->player.rotSpeed) + global->player.planeY * cos(global->player.rotSpeed);
 	}
-return (0);
-
+	return (0);
 }
 
 /*----------------------------------------------------*/
