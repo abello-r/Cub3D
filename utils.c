@@ -14,35 +14,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int		key_move(int keycode, t_global *global)
 {
-	int worldMap[24][24]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
-
-	global->player.moveSpeed = 0.1 * 5.0; // Aumentando el 0.1 damos más velocidad al movimiento vectorial.
+	global->player.moveSpeed = 0.6; // Aumentando el 0.1 damos más velocidad al movimiento vectorial.
 	global->player.rotSpeed = 0.1 * 3.0; // Aquí pasa igual pero con el movimiento de rotación.
 	printf("%d\n", keycode);
 
@@ -75,8 +47,29 @@ int		key_move(int keycode, t_global *global)
 			global->player.posY -= global->player.dirY * global->player.moveSpeed;
 		}
 	}
-	
-	if (keycode == KEY_RIGHT) // Rotar a la Derecha REVISADA
+	if (keycode == KEY_RIGHT) // Mover derecha REVISADA
+	{
+		if (!worldMap[(int)(global->player.posX)][((int)(global->player.posY - global->player.dirX * global->player.moveSpeed))])
+		{
+			global->player.posY -= global->player.dirX * global->player.moveSpeed;
+		}
+		if (!worldMap[(int)(global->player.posX + global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)])
+		{
+			global->player.posX += global->player.dirY * global->player.moveSpeed;
+		}
+	}
+	if (keycode == KEY_LEFT) // Mover Izquierda REVISADA
+	{
+		if (!worldMap[(int)(global->player.posX)][((int)(global->player.posY + global->player.dirX * global->player.moveSpeed))])
+		{
+			global->player.posY += global->player.dirX * global->player.moveSpeed;
+		}
+		if (!worldMap[(int)(global->player.posX - global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)])
+		{
+			global->player.posX -= global->player.dirY * global->player.moveSpeed;
+		}
+	}
+	if (keycode == KEY_RIGHT_VISION) // Rotar a la Derecha REVISADA
 	{
 		global->player.oldDirX = global->player.dirX;
 		global->player.dirX = global->player.dirX * cos(-global->player.rotSpeed) - global->player.dirY * sin(-global->player.rotSpeed);
@@ -85,7 +78,7 @@ int		key_move(int keycode, t_global *global)
 		global->player.planeX = global->player.planeX * cos(-global->player.rotSpeed) - global->player.planeY * sin(-global->player.rotSpeed);
 		global->player.planeY = global->player.oldPlaneX * sin(-global->player.rotSpeed) + global->player.planeY * cos(-global->player.rotSpeed);
 	}
-	if (keycode == KEY_LEFT) // Rotar a la Izquierda REVISADA
+	if (keycode == KEY_LEFT_VISION) // Rotar a la Izquierda REVISADA
 	{
 		global->player.oldDirX = global->player.dirX;
 		global->player.dirX = global->player.dirX * cos(global->player.rotSpeed) - global->player.dirY * sin(global->player.rotSpeed);

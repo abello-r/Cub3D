@@ -30,7 +30,7 @@ int worldMap[mapWidth][mapHeight]=
 
 int raycasting(t_global *global)
 {
-	int	w = 1920;
+	int	w = screenWidth;
 	int x = 0; 
 	int y = 0;
 
@@ -75,14 +75,14 @@ int raycasting(t_global *global)
 				global->player.mapX += global->player.stepX;
 				global->player.side = 0;
 			}
-		else
-		{
-			global->player.sideDistY += global->player.deltaDistY;
-			global->player.mapY += global->player.stepY;
-			global->player.side = 1;
-		}
-		if (worldMap[global->player.mapX][global->player.mapY] > 0) 
-			global->player.hit = 1;
+			else
+			{
+				global->player.sideDistY += global->player.deltaDistY;
+				global->player.mapY += global->player.stepY;
+				global->player.side = 1;
+			}
+			if (worldMap[global->player.mapX][global->player.mapY] > 0) 
+				global->player.hit = 1;
 		}
 		if (global->player.side == 0)
 		{
@@ -92,11 +92,11 @@ int raycasting(t_global *global)
 		{
 			global->player.perpWallDist = (global->player.mapY - global->player.posY + (1 - global->player.stepY) / 2) / global->player.rayDirY;
 		}
-		global->player.line_height = (1080 / global->player.perpWallDist); // Calcula la altura de la linea a pintar.
-		global->player.drawStart = -global->player.line_height / 2 + 1080 / 2;
+		global->player.line_height = (screenHeight / global->player.perpWallDist); // Calcula la altura de la linea a pintar.
+		global->player.drawStart = -global->player.line_height / 2 + screenHeight / 2;
 		global->player.drawStart = (global->player.drawStart < 0) ? 0 : global->player.drawStart;
-		global->player.drawEnd = global->player.line_height / 2 + 1080 / 2;
-		global->player.drawEnd = (global->player.drawEnd >= 1080) ? 1080 - 1 : global->player.drawEnd;
+		global->player.drawEnd = global->player.line_height / 2 + screenHeight / 2;
+		global->player.drawEnd = (global->player.drawEnd >= screenHeight) ? screenHeight - 1 : global->player.drawEnd;
 		if (worldMap[global->player.mapX][global->player.mapY] == 1)
 		{
 			global->data.color = 0x665e48;
@@ -125,7 +125,7 @@ int raycasting(t_global *global)
 			my_mlx_pixel_put(&global->data, x, y, global->data.color);
 			y++;
 		}
-		while (y < 1080) //Color del suelo.
+		while (y < screenHeight) //Color del suelo.
 		{
 			my_mlx_pixel_put(&global->data, x, y, 0x399c5d);
 			y++;
@@ -141,13 +141,13 @@ int main (void)
 	t_global global;
 
 	global.data.mlx		= mlx_init();
-	global.data.win		= mlx_new_window(global.data.mlx, 1920, 1080, "Cub3d");
-	global.data.img		= mlx_new_image(global.data.mlx, 1920, 1080);
+	global.data.win		= mlx_new_window(global.data.mlx, screenWidth, screenHeight, "Cub3d");
+	global.data.img		= mlx_new_image(global.data.mlx, screenWidth, screenHeight);
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
 	// Asignación de valores.
-	global.player.posX =	14;
-	global.player.posY =	14;
+	global.player.posX =	14 + 0.5;
+	global.player.posY =	14 + 0.5;
 	global.player.dirX =	-1;
 	global.player.dirY =	0;
 	global.player.planeX =	0;

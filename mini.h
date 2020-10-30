@@ -11,10 +11,19 @@
 
 # define KEY_UP				13 // Arriba.
 # define KEY_DOWN			1 // Abajo.
-# define KEY_RIGHT			124 // Derecha.
-# define KEY_LEFT			123 // Izquierda.
+# define KEY_RIGHT			2 // Derecha.
+# define KEY_LEFT			0 // Izquierda.
+
+# define KEY_RIGHT_VISION		124 // Derecha.
+# define KEY_LEFT_VISION		123 // Izquierda.
+
 # define ESCAPE				53 // Tecla ESCAPE.
 
+
+# define screenWidth		1900 // Anchura de la pantalla.
+# define screenHeight		1080 // Altura de la pantalla.
+# define texWidth 			64 // Anchura de la textura.
+# define texHeight 			64 // Altura de la textura.
 # define mapWidth			24	// Ancho del mapa.
 # define mapHeight			24	// Alto del mapa.
 
@@ -98,6 +107,8 @@ typedef	struct	s_global // Conjunto de estructuras.
 }				t_global;
 
 /*----------------------------------------------------*/
+
+extern int worldMap[mapWidth][mapHeight];
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
 int		key_move(int keycode, t_global *global);
