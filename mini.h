@@ -94,6 +94,15 @@ typedef struct	s_player // Datos de Jugador
 	double	moveSpeed; // Velocidad del movimiento vectorial.
 	double	rotSpeed; // Velocidad del movimiento de rotación.
 
+	int		texNum;
+	int		texX;
+	int		texY;
+	double	wallX;
+	double	step;
+	double	texPos;
+	unsigned int *textura;
+	char *buffer;
+	
 
 }				t_player;
 
