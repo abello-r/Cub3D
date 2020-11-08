@@ -22,15 +22,13 @@
 
 # define screenWidth		1900 // Anchura de la pantalla.
 # define screenHeight		1080 // Altura de la pantalla.
-# define texWidth 			64 // Anchura de la textura.
-# define texHeight 			64 // Altura de la textura.
 # define mapWidth			24	// Ancho del mapa.
 # define mapHeight			24	// Alto del mapa.
 
 
 /*----------------------------------------------------*/
 
-typedef struct	s_data // Pantalla e imagén.
+typedef struct		s_data // Pantalla e imagén.
 {
 	void	*mlx;
 	void	*win;
@@ -47,10 +45,42 @@ typedef struct	s_data // Pantalla e imagén.
 	int		color;
 
 }				t_data;
+/*---------------------------------------------------*/
+
+typedef	struct		s_textura_norte // Texturas y sprites.
+{
+	int 	bits_per_pixel;
+	int 	line_lenght; 
+	int 	endian;
+}				t_textura_norte;
+
+typedef	struct		s_textura_sur // Texturas y sprites.
+{
+	int 			bits_per_pixel;
+	int 			line_lenght; 
+	int 			endian;
+	void			*textura;
+}				t_textura_sur;
+
+typedef	struct		s_textura_este // Texturas y sprites.
+{
+	int 	bits_per_pixel;
+	int 	line_lenght; 
+	int 	endian;
+
+}				t_textura_este;
+
+typedef	struct		s_textura_oeste // Texturas y sprites.
+{
+	int 	bits_per_pixel;
+	int 	line_lenght; 
+	int 	endian;
+
+}				t_textura_oeste;
 
 /*----------------------------------------------------*/
 
-typedef struct	s_player // Datos de Jugador
+typedef struct		s_player // Datos de Jugador
 {
 	int		*N; // Jugador
 
@@ -94,25 +124,30 @@ typedef struct	s_player // Datos de Jugador
 	double	moveSpeed; // Velocidad del movimiento vectorial.
 	double	rotSpeed; // Velocidad del movimiento de rotación.
 
+
+	int		tex_width;
+	int		tex_height;
 	int		texNum;
 	int		texX;
 	int		texY;
 	double	wallX;
 	double	step;
 	double	texPos;
-	unsigned int *textura;
-	char *buffer;
-	
+	void	*textura;
+	unsigned int *buffer;
 
 }				t_player;
 
 /*----------------------------------------------------*/
 
-typedef	struct	s_global // Conjunto de estructuras.
+typedef	struct		s_global // Conjunto de estructuras.
 {
-	t_data		data; // Datos de imagen y teclas.
-	t_player	player; // Datos del jugador.
-
+	t_data			data; // Datos de imagen y teclas.
+	t_player		player; // Datos del jugador.
+	t_textura_norte	textura_norte; // Datos de la textura NORTE.
+	t_textura_sur	textura_sur; // Datos de la textura SUR.
+	t_textura_este	textura_este; // Datos de la textura ESTE.
+	t_textura_oeste	textura_oeste; // Datos de la textura OESTE.
 }				t_global;
 
 /*----------------------------------------------------*/
@@ -121,5 +156,7 @@ extern int worldMap[mapWidth][mapHeight];
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
 int		key_move(int keycode, t_global *global);
-
+void	ft_getTexture(t_global *global);
 #endif
+
+ 

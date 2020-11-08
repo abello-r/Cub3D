@@ -91,3 +91,32 @@ int		key_move(int keycode, t_global *global)
 }
 
 /*----------------------------------------------------*/
+
+void		ft_getTexture(t_global *global)
+{
+
+		global->player.stepX = -1; // ESTO NO DEBERIA ESTAR. 
+		
+		if (global->player.side == 0 && global->player.stepX == -1) // NORTE 
+		{
+			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/wood.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_norte.bits_per_pixel, &global->textura_norte.line_lenght, &global->textura_norte.endian);
+		}
+		if (global->player.side == 0 && global->player.stepX == 1) // SUR
+		{
+			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/stone.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_sur.bits_per_pixel, &global->textura_sur.line_lenght, &global->textura_sur.endian);
+		}
+		if (global->player.side == 1 && global->player.stepY == 1) // ESTE
+		{
+			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/mossy.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_este.bits_per_pixel, &global->textura_este.line_lenght, &global->textura_este.endian);
+		}
+		if (global->player.side == 1 && global->player.stepY == -1) // OESTE
+		{
+			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/redbrick.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_oeste.bits_per_pixel, &global->textura_oeste.line_lenght, &global->textura_oeste.endian);
+		}
+}
+
+/*----------------------------------------------------*/

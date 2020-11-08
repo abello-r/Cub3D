@@ -96,8 +96,7 @@ int raycasting(t_global *global)
 		global->player.drawStart = (global->player.drawStart < 0) ? 0 : global->player.drawStart;
 		global->player.drawEnd = global->player.line_height / 2 + screenHeight / 2;
 		global->player.drawEnd = (global->player.drawEnd >= screenHeight) ? screenHeight - 1 : global->player.drawEnd;
-		
-		/*-------------------------------------------------------------------------------------------------------*/
+	/*-------------------------------------------------------------------------------------------------------*/
 
 		global->player.texNum = worldMap[global->player.mapX][global->player.mapY]; // DESDE AQUI
 
@@ -110,32 +109,40 @@ int raycasting(t_global *global)
 			global->player.wallX = global->player.posX + global->player.perpWallDist * global->player.rayDirX;
 		}
 		global->player.wallX -= floor((global->player.wallX));
-		global->player.texX = ((int)global->player.wallX * (double)texWidth);
+		global->player.texX = (int)(global->player.wallX * (double)global->player.tex_width);
 		if (global->player.side == 0 && global->player.rayDirX > 0)
 		{
-			global->player.texX = texWidth - global->player.texX - 1;
+			global->player.texX = global->player.tex_width - global->player.texX - 1;
 		}
 		if (global->player.side == 1 && global->player.rayDirY < 0)
 		{
-			global->player.texX = texWidth - global->player.texX - 1;
+			global->player.texX = global->player.tex_width - global->player.texX - 1;
 		}
-		global->player.step = 1.0 * texHeight / global->player.line_height;
+		global->player.step = 1.0 * global->player.tex_height / global->player.line_height;
 		global->player.texPos = (global->player.drawStart - screenHeight / 2 + global->player.line_height / 2) * global->player.step;
+		y = 0;
+		while (y < global->player.drawStart) // Color del cielo.
+		{
+			my_mlx_pixel_put(&global->data, x, y, 0x2271b3);
+			y++;
+		}
 		y = global->player.drawStart;
 		while (y++ < global->player.drawEnd)
 		{
-			global->player.texY = (int)global->player.texPos & (texHeight - 1);
-			printf("text:%d", global->player.texY);
-		
+			global->player.texY = (int)global->player.texPos;
 			global->player.texPos += global->player.step;
-			global->player.textura = mlx_xpm_file_to_image(&global->data.mlx, "wood.png", 0,0);
-			global->player.buffer = mlx_get_data_addr(&global->player.textura, &global->data.bits_per_pixel, &global->data.line_lenght, &global->data.endian);
+			//FUNCION DE SELECCIONAR TEXTURA DEPENDE DE LA ORIENTACION.
+			global->data.color = global->player.buffer[global->player.tex_width * global->player.texY + global->player.texX]; 
+			my_mlx_pixel_put(&global->data, x, y, global->data.color);
 		}
-
-
+		while (y < screenHeight) //Color del suelo.
+		{
+			my_mlx_pixel_put(&global->data, x, y, 0x399c5d);
+			y++;
+		}
 		/*-----------------------------------------------------------------------------------------------------------------------------*/
 		
-		if (worldMap[global->player.mapX][global->player.mapY] == 1)
+		/*if (worldMap[global->player.mapX][global->player.mapY] == 1)
 		{
 			global->data.color = 0x665e48;
 		}
@@ -143,7 +150,7 @@ int raycasting(t_global *global)
 		{
 			global->data.color = 0x0000ff;
 		}
-		else
+		else	
 		{
 			global->data.color = 0xffffff;
 		}
@@ -152,22 +159,13 @@ int raycasting(t_global *global)
 			global->data.color = global->data.color / 2;
 		}
 		y = 0;
-		while (y < global->player.drawStart) // Color del cielo.
-		{
-			my_mlx_pixel_put(&global->data, x, y, 0x2271b3);
-			y++;
-		}
 		y = global->player.drawStart;
 		while(y < global->player.drawEnd) // Color de la pared.
 		{
 			my_mlx_pixel_put(&global->data, x, y, global->data.color);
 			y++;
 		}
-		while (y < screenHeight) //Color del suelo.
-		{
-			my_mlx_pixel_put(&global->data, x, y, 0x399c5d);
-			y++;
-		}
+		}*/
 		x++;
 	}
 	mlx_put_image_to_window(global->data.mlx, global->data.win, global->data.img, 0, 0);
@@ -184,7 +182,7 @@ int main (void)
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
 	// Asignación de valores.
-	global.player.posX =	14 + 0.5;
+	global.player.posX =	14 - 0.5;
 	global.player.posY =	14 + 0.5;
 	global.player.dirX =	-1;
 	global.player.dirY =	0;
@@ -193,5 +191,6 @@ int main (void)
 
 	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global);
 	mlx_loop_hook(global.data.mlx, raycasting, &global);
+	ft_getTexture(&global);
 	mlx_loop(global.data.mlx);
 }
