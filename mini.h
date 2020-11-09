@@ -52,6 +52,7 @@ typedef	struct		s_textura_norte // Texturas y sprites.
 	int 	bits_per_pixel;
 	int 	line_lenght; 
 	int 	endian;
+	void	*tex_norte;
 }				t_textura_norte;
 
 typedef	struct		s_textura_sur // Texturas y sprites.
@@ -59,7 +60,7 @@ typedef	struct		s_textura_sur // Texturas y sprites.
 	int 			bits_per_pixel;
 	int 			line_lenght; 
 	int 			endian;
-	void			*textura;
+	void			*tex_sur;
 }				t_textura_sur;
 
 typedef	struct		s_textura_este // Texturas y sprites.
@@ -67,7 +68,7 @@ typedef	struct		s_textura_este // Texturas y sprites.
 	int 	bits_per_pixel;
 	int 	line_lenght; 
 	int 	endian;
-
+	void	*tex_este;
 }				t_textura_este;
 
 typedef	struct		s_textura_oeste // Texturas y sprites.
@@ -75,7 +76,7 @@ typedef	struct		s_textura_oeste // Texturas y sprites.
 	int 	bits_per_pixel;
 	int 	line_lenght; 
 	int 	endian;
-
+	void	*tex_oeste;
 }				t_textura_oeste;
 
 /*----------------------------------------------------*/
@@ -155,8 +156,10 @@ typedef	struct		s_global // Conjunto de estructuras.
 extern int worldMap[mapWidth][mapHeight];
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
-int		key_move(int keycode, t_global *global);
-void	ft_getTexture(t_global *global);
+int		key_move(int keycode, t_global *global); // Funcion para el movimiento del jugador y camara
+void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
+void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
+void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
 #endif
 
  

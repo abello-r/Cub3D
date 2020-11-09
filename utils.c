@@ -9,15 +9,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-
 /*---------------------------------------------------- Movimiento dentro del cub3d */
 
 int		key_move(int keycode, t_global *global)
 {
-	global->player.moveSpeed = 0.6; // Aumentando el 0.1 damos más velocidad al movimiento vectorial.
-	global->player.rotSpeed = 0.1 * 3.0; // Aquí pasa igual pero con el movimiento de rotación.
-	printf("%d\n", keycode);
-
 	if (keycode == ESCAPE) // Escape REVISADA
 	{
 		mlx_clear_window(global->data.mlx, global->data.win);
@@ -90,33 +85,50 @@ int		key_move(int keycode, t_global *global)
 	return (0);
 }
 
-/*----------------------------------------------------*/
-
-void		ft_getTexture(t_global *global)
+void		ft_get_texture(t_global *global)
 {
-
-		global->player.stepX = -1; // ESTO NO DEBERIA ESTAR. 
-		
+		/*	Guardar el valor obtenido de la funcion ft_fill_texture en el buffer para luego ser pintado	*/
 		if (global->player.side == 0 && global->player.stepX == -1) // NORTE 
 		{
-			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/wood.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.textura = global->textura_norte.tex_norte;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_norte.bits_per_pixel, &global->textura_norte.line_lenght, &global->textura_norte.endian);
 		}
 		if (global->player.side == 0 && global->player.stepX == 1) // SUR
 		{
-			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/stone.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.textura = global->textura_sur.tex_sur;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_sur.bits_per_pixel, &global->textura_sur.line_lenght, &global->textura_sur.endian);
 		}
 		if (global->player.side == 1 && global->player.stepY == 1) // ESTE
 		{
-			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/mossy.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.textura = global->textura_este.tex_este;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_este.bits_per_pixel, &global->textura_este.line_lenght, &global->textura_este.endian);
 		}
 		if (global->player.side == 1 && global->player.stepY == -1) // OESTE
 		{
-			global->player.textura = mlx_xpm_file_to_image(global->data.mlx, "srcs/redbrick.xpm", &global->player.tex_width, &global->player.tex_height);
+			global->player.textura = global->textura_oeste.tex_oeste;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_oeste.bits_per_pixel, &global->textura_oeste.line_lenght, &global->textura_oeste.endian);
 		}
 }
 
-/*----------------------------------------------------*/
+void		ft_fill_texture(t_global *global)
+{
+	/* Asignar valor de textura a una variable "tex.norte/sur/este/oeste" */
+	global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, "srcs/wood.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, "srcs/madera.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, "srcs/mossy.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, "srcs/stone.xpm", &global->player.tex_width, &global->player.tex_height);
+}
+
+void		ft_init_structs(t_global *global)
+{
+	/*	Inicializar valores de variables en la estructura	*/
+
+	global->player.posX =	4 - 0.5; /* Posicion inicial en x */
+	global->player.posY =	4 + 0.5; /* Posicion inicial en y */
+	global->player.dirX =	-1;
+	global->player.dirY =	0;
+	global->player.planeX =	0;
+	global->player.planeY =	0.66;
+	global->player.moveSpeed = 0.3; /* Movimiento del jugador */
+	global->player.rotSpeed = 0.29; /* Movimiento de la camara */
+}

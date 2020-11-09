@@ -1,18 +1,18 @@
 #include "mini.h"
 
 int worldMap [mapWidth] [mapHeight] = 
-{ {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7}, 
-  {4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7}, 
-  {4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7}, 
-  {4,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7}, 
-  {4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7}, 
-  {4,0,4,0,0,0,0,5,5,5,5,5,5,5,5,5,7,7,0,7,7,7,7,7}, 
-  {4,0,5,0,0,0,0,5,0,5,0,5,0,5,0,5,7,0,0,0,7,7,7,1}, 
-  {4,0,6,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-  {4,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,1}, 
-  {4,0,8,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8}, 
-  {4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,7,7,7,1}, 
-  {4,0,0,0,0,0,0,5,5,5,5,0,5,5,5,5,7,7,7,7,7,7,7,1}, 
+{ {1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7}, 
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7}, 
+  {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7}, 
+  {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7}, 
+  {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7}, 
+  {1,0,1,0,0,0,0,5,5,5,1,1,1,1,1,1,7,7,0,7,7,7,7,7}, 
+  {1,0,1,0,0,0,0,5,0,5,0,1,0,1,0,1,7,0,0,0,7,7,7,1}, 
+  {1,0,1,0,0,0,0,5,0,0,0,0,0,0,0,1,7,0,0,0,0,0,0,8},
+  {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,1}, 
+  {4,0,8,0,0,0,0,5,0,0,0,0,0,0,0,1,7,0,0,0,0,0,0,8}, 
+  {4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,1,7,0,0,0,7,7,7,1}, 
+  {4,0,0,0,0,0,0,5,5,5,5,0,5,1,1,1,7,7,7,7,7,7,7,1}, 
   {6,6,6,6,6,6,6,6,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6}, 
   {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4}, 
   {6,6,6,6,6,6,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6}, 
@@ -98,7 +98,7 @@ int raycasting(t_global *global)
 		global->player.drawEnd = (global->player.drawEnd >= screenHeight) ? screenHeight - 1 : global->player.drawEnd;
 	/*-------------------------------------------------------------------------------------------------------*/
 
-		global->player.texNum = worldMap[global->player.mapX][global->player.mapY]; // DESDE AQUI
+		global->player.texNum = worldMap[global->player.mapX][global->player.mapY]; // DESDE AQUI EMPIEZAN LAS TEXTURAS.
 
 		if (global->player.side == 0)
 		{
@@ -127,11 +127,11 @@ int raycasting(t_global *global)
 			y++;
 		}
 		y = global->player.drawStart;
+		ft_get_texture(global); // Funcion que le asigna valor a buffer (paredes).
 		while (y++ < global->player.drawEnd)
 		{
 			global->player.texY = (int)global->player.texPos;
 			global->player.texPos += global->player.step;
-			//FUNCION DE SELECCIONAR TEXTURA DEPENDE DE LA ORIENTACION.
 			global->data.color = global->player.buffer[global->player.tex_width * global->player.texY + global->player.texX]; 
 			my_mlx_pixel_put(&global->data, x, y, global->data.color);
 		}
@@ -140,32 +140,6 @@ int raycasting(t_global *global)
 			my_mlx_pixel_put(&global->data, x, y, 0x399c5d);
 			y++;
 		}
-		/*-----------------------------------------------------------------------------------------------------------------------------*/
-		
-		/*if (worldMap[global->player.mapX][global->player.mapY] == 1)
-		{
-			global->data.color = 0x665e48;
-		}
-		else if (worldMap[global->player.mapX][global->player.mapY] == 2)
-		{
-			global->data.color = 0x0000ff;
-		}
-		else	
-		{
-			global->data.color = 0xffffff;
-		}
-		if (global->player.side == 1) // Esto es para darle un brillo diferente al chocar con una pared.
-		{
-			global->data.color = global->data.color / 2;
-		}
-		y = 0;
-		y = global->player.drawStart;
-		while(y < global->player.drawEnd) // Color de la pared.
-		{
-			my_mlx_pixel_put(&global->data, x, y, global->data.color);
-			y++;
-		}
-		}*/
 		x++;
 	}
 	mlx_put_image_to_window(global->data.mlx, global->data.win, global->data.img, 0, 0);
@@ -181,16 +155,9 @@ int main (void)
 	global.data.img		= mlx_new_image(global.data.mlx, screenWidth, screenHeight);
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
-	// Asignación de valores.
-	global.player.posX =	14 - 0.5;
-	global.player.posY =	14 + 0.5;
-	global.player.dirX =	-1;
-	global.player.dirY =	0;
-	global.player.planeX =	0;
-	global.player.planeY =	0.66;
-
-	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global);
-	mlx_loop_hook(global.data.mlx, raycasting, &global);
-	ft_getTexture(&global);
-	mlx_loop(global.data.mlx);
+	ft_init_structs(&global); // Inicializar valores
+	ft_fill_texture(&global); // Obtener texturas
+	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global); // Hook para las teclas
+	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
+	mlx_loop(global.data.mlx); // Loop general
 }
