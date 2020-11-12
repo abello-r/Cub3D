@@ -24,7 +24,7 @@
 # define screenHeight		1080 // Altura de la pantalla.
 # define mapWidth			24	// Ancho del mapa.
 # define mapHeight			24	// Alto del mapa.
-
+# define num_sprites		19
 
 /*----------------------------------------------------*/
 
@@ -47,7 +47,7 @@ typedef struct		s_data // Pantalla e imagén.
 }				t_data;
 /*---------------------------------------------------*/
 
-typedef	struct		s_textura_norte // Texturas y sprites.
+typedef	struct		s_textura_norte // Texturas NORTE
 {
 	int 	bits_per_pixel;
 	int 	line_lenght; 
@@ -55,7 +55,7 @@ typedef	struct		s_textura_norte // Texturas y sprites.
 	void	*tex_norte;
 }				t_textura_norte;
 
-typedef	struct		s_textura_sur // Texturas y sprites.
+typedef	struct		s_textura_sur // Texturas SUR
 {
 	int 			bits_per_pixel;
 	int 			line_lenght; 
@@ -63,7 +63,7 @@ typedef	struct		s_textura_sur // Texturas y sprites.
 	void			*tex_sur;
 }				t_textura_sur;
 
-typedef	struct		s_textura_este // Texturas y sprites.
+typedef	struct		s_textura_este // Textura ESTE
 {
 	int 	bits_per_pixel;
 	int 	line_lenght; 
@@ -71,13 +71,22 @@ typedef	struct		s_textura_este // Texturas y sprites.
 	void	*tex_este;
 }				t_textura_este;
 
-typedef	struct		s_textura_oeste // Texturas y sprites.
+typedef	struct		s_textura_oeste // Texturas OESTE
 {
 	int 	bits_per_pixel;
 	int 	line_lenght; 
 	int 	endian;
 	void	*tex_oeste;
 }				t_textura_oeste;
+
+typedef struct		s_sprite // Sprites.
+{
+	int				i;
+	double			x;
+	double			y;
+	int				textura;
+	unsigned int	*z_buffer;
+}					t_sprite;
 
 /*----------------------------------------------------*/
 
@@ -149,6 +158,7 @@ typedef	struct		s_global // Conjunto de estructuras.
 	t_textura_sur	textura_sur; // Datos de la textura SUR.
 	t_textura_este	textura_este; // Datos de la textura ESTE.
 	t_textura_oeste	textura_oeste; // Datos de la textura OESTE.
+	t_sprite		sprite; // Datos de los Sprites.
 }				t_global;
 
 /*----------------------------------------------------*/

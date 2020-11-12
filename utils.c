@@ -113,10 +113,10 @@ void		ft_get_texture(t_global *global)
 void		ft_fill_texture(t_global *global)
 {
 	/* Asignar valor de textura a una variable "tex.norte/sur/este/oeste" */
-	global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, "srcs/wood.xpm", &global->player.tex_width, &global->player.tex_height);
-	global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, "srcs/madera.xpm", &global->player.tex_width, &global->player.tex_height);
-	global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, "srcs/mossy.xpm", &global->player.tex_width, &global->player.tex_height);
-	global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, "srcs/stone.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, "srcs/lavaboy.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, "srcs/bloque.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, "srcs/puerta.xpm", &global->player.tex_width, &global->player.tex_height);
+	global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, "srcs/flor.xpm", &global->player.tex_width, &global->player.tex_height);
 }
 
 void		ft_init_structs(t_global *global)
@@ -131,4 +131,6 @@ void		ft_init_structs(t_global *global)
 	global->player.planeY =	0.66;
 	global->player.moveSpeed = 0.3; /* Movimiento del jugador */
 	global->player.rotSpeed = 0.29; /* Movimiento de la camara */
+	global->sprite.x = 0;
+	global->sprite.y = 0;
 }
