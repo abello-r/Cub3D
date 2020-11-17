@@ -86,6 +86,7 @@ typedef struct		s_sprite // Sprites.
 	double			y;
 	int				textura;
 	unsigned int	*z_buffer;
+	char			*sprites;
 }					t_sprite;
 
 /*----------------------------------------------------*/
@@ -125,7 +126,7 @@ typedef struct		s_player // Datos de Jugador
 	double	deltaDistX; //Distancia que el rayo tiene que viajar para ir de 1 lado x al siguiente lado x.
 	double	deltaDistY; //Distancia que el rayo tiene que viajar para ir de 1 lado y al siguiente lado y.
 
-	double	perpWallDist;
+	double	perpWallDist; // Longitud del rayo.
 
 	int		line_height; // Altura de la linea.
 	int		drawStart; // Dónde empezar a dibujar.
@@ -170,6 +171,7 @@ int		key_move(int keycode, t_global *global); // Funcion para el movimiento del 
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
 void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
 void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
+int		ft_lectura(int argc, char **argv);
 #endif
 
  

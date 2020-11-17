@@ -134,3 +134,55 @@ void		ft_init_structs(t_global *global)
 	global->sprite.x = 0;
 	global->sprite.y = 0;
 }
+
+int		ft_lectura(int argc, char **argv) // Tengo que comparar el tercer argumento con "--save".
+{
+	char *s = "--save";
+	char *tmp;
+	int i;
+	int x;
+
+	i = 0;
+	printf("Numero de argumentos ->[%d]\n", argc);
+	if (argc < 2 || argc > 3)
+	{
+		write(1,"Error:\nNúmero de argumentos inválido\n", 39);
+		exit(0);
+	}
+	/* ".cub" control -> Revisar si el archivo termina en .cub, si lo es y con el open no abre nada = error, si lo es, y con el open abre = bien*/
+	else if (argc == 2)
+	{
+
+	}
+	/* "--save" control */
+	else if (argc == 3)
+	{
+		tmp = ft_strdup(&argv[2][i]);
+		i = ft_strlen(tmp);
+		x = ft_strlen(s);
+		
+		if (x != i)
+		{
+			write(1,"Error:\nArgumento inválido : Prueba escribiendo \"--save\"\n", 58);
+			free(tmp);
+			exit(0);
+		}
+		else if (x == i)
+		{
+			x = 0;
+			i = 0;
+			while(tmp[x++] != '\0' && s[i++] != '\0')
+			{
+				if (tmp[i] != s[x])
+				{
+					write(1,"Error:\nArgumento inválido : Prueba escribiendo \"--save\"\n", 58);
+					free(tmp);
+					exit(0);
+				}
+			}
+		}
+		free(tmp);
+		// Aqui iria la funcion del --save
+	}
+	return(0);
+}

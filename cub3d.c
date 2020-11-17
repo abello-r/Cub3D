@@ -142,31 +142,13 @@ int raycasting(t_global *global)
 		}
 		x++;
 		/* AQUI EMPIEZA EL CASTING DE LOS SPRITES */
-		/*global->sprite.i = 0;
-		global->sprite.z_buffer[(int)global->sprite.x] = global->player.perpWallDist;
-		while (global->sprite.i++ < num_sprites)
-		{
-			
-		}
-		
-
-
-
-
-
-
-
-
-
-
-		*/
 		/* AQUI TERMINA EL CASTING DE LOS SPRITES */
 	}
 	mlx_put_image_to_window(global->data.mlx, global->data.win, global->data.img, 0, 0);
 	return (1);
 }
 
-int main (void)
+int main (int argc, char **argv)
 {
 	t_global global;
 
@@ -175,6 +157,7 @@ int main (void)
 	global.data.img		= mlx_new_image(global.data.mlx, screenWidth, screenHeight);
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
+	ft_lectura(argc, argv);
 	ft_init_structs(&global); // Inicializar valores
 	ft_fill_texture(&global); // Obtener texturas
 	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global); // Hook para las teclas
