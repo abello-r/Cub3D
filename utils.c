@@ -135,54 +135,36 @@ void		ft_init_structs(t_global *global)
 	global->sprite.y = 0;
 }
 
-int		ft_lectura(int argc, char **argv) // Tengo que comparar el tercer argumento con "--save".
+int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo argumento con ".cub" y el tercer argumento con "--save".
 {
-	char *s = "--save";
 	char *tmp;
 	int i;
-	int x;
 
 	i = 0;
-	printf("Numero de argumentos ->[%d]\n", argc);
+	/* Argumento control */
 	if (argc < 2 || argc > 3)
+		ft_print_error("Número de argumentos inválido");
+	/* ".cub" control */
+	else if (argc == 2 || argc == 3)
 	{
-		write(1,"Error:\nNúmero de argumentos inválido\n", 39);
-		exit(0);
-	}
-	/* ".cub" control -> Revisar si el archivo termina en .cub, si lo es y con el open no abre nada = error, si lo es, y con el open abre = bien*/
-	else if (argc == 2)
-	{
+		if((tmp = ft_strchr(argv[1], '.')) == NULL)
+			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\"");
+		if((ft_strncmp(tmp, ".cub\0", 5)) != 0)
+			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\"");
+		//Aqui iria la funcion de open texturas
 
-	}
-	/* "--save" control */
-	else if (argc == 3)
-	{
-		tmp = ft_strdup(&argv[2][i]);
-		i = ft_strlen(tmp);
-		x = ft_strlen(s);
-		
-		if (x != i)
-		{
-			write(1,"Error:\nArgumento inválido : Prueba escribiendo \"--save\"\n", 58);
-			free(tmp);
-			exit(0);
-		}
-		else if (x == i)
-		{
-			x = 0;
-			i = 0;
-			while(tmp[x++] != '\0' && s[i++] != '\0')
-			{
-				if (tmp[i] != s[x])
-				{
-					write(1,"Error:\nArgumento inválido : Prueba escribiendo \"--save\"\n", 58);
-					free(tmp);
-					exit(0);
-				}
-			}
-		}
-		free(tmp);
-		// Aqui iria la funcion del --save
+		/* "--save" control  */	
+		if (argc == 3)
+			if(ft_strncmp(argv[2], "--save\0", 7) != 0)
+				ft_print_error("Argumento inválido : Prueba escribiendo \"--save\"");
 	}
 	return(0);
+}
+
+void		ft_print_error(char *s)
+{
+	ft_putstr_fd("Error:\n", 1);
+	ft_putstr_fd(s, 1);
+	write(1, "\n", 1);
+	exit(0);
 }

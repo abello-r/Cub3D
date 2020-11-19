@@ -151,13 +151,13 @@ int raycasting(t_global *global)
 int main (int argc, char **argv)
 {
 	t_global global;
+	ft_control_error(argc, argv);
 
 	global.data.mlx		= mlx_init();
 	global.data.win		= mlx_new_window(global.data.mlx, screenWidth, screenHeight, "Cub3d");
 	global.data.img		= mlx_new_image(global.data.mlx, screenWidth, screenHeight);
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
-	ft_lectura(argc, argv);
 	ft_init_structs(&global); // Inicializar valores
 	ft_fill_texture(&global); // Obtener texturas
 	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global); // Hook para las teclas

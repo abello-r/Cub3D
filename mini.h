@@ -171,7 +171,8 @@ int		key_move(int keycode, t_global *global); // Funcion para el movimiento del 
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
 void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
 void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
-int		ft_lectura(int argc, char **argv);
+int		ft_control_error(int argc, char **argv);
+void	ft_print_error(char *s);
 #endif
 
  
