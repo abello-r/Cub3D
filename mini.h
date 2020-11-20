@@ -8,6 +8,7 @@
 # include "./libft/libft.h"
 # include <mlx.h>
 # include <math.h>
+# include <fcntl.h>
 
 # define KEY_UP				13 // Arriba.
 # define KEY_DOWN			1 // Abajo.
@@ -174,5 +175,3 @@ void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
 int		ft_control_error(int argc, char **argv);
 void	ft_print_error(char *s);
 #endif
-
- 

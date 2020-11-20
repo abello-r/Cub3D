@@ -113,10 +113,14 @@ void		ft_get_texture(t_global *global)
 void		ft_fill_texture(t_global *global)
 {
 	/* Asignar valor de textura a una variable "tex.norte/sur/este/oeste" */
-	global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, "srcs/lavaboy.xpm", &global->player.tex_width, &global->player.tex_height);
-	global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, "srcs/bloque.xpm", &global->player.tex_width, &global->player.tex_height);
-	global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, "srcs/puerta.xpm", &global->player.tex_width, &global->player.tex_height);
-	global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, "srcs/flor.xpm", &global->player.tex_width, &global->player.tex_height);
+	if(!(global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx,"srcs/lavaboy.xpm", &global->player.tex_width, &global->player.tex_height)))
+		ft_print_error("La textura NORTE que has introducido no existe.");
+	else if(!(global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, "srcs/bloque.xpm", &global->player.tex_width, &global->player.tex_height)))
+		ft_print_error("La textura SUR que has introducido no existe.");
+	else if(!(global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, "srcs/puerta.xpm", &global->player.tex_width, &global->player.tex_height)))
+		ft_print_error("La textura ESTE que has introducido no existe.");
+	else if(!(global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, "srcs/flor.xpm", &global->player.tex_width, &global->player.tex_height)))
+		ft_print_error("La textura OESTE que has introducido no existe.");
 }
 
 void		ft_init_structs(t_global *global)
@@ -143,20 +147,20 @@ int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo ar
 	i = 0;
 	/* Argumento control */
 	if (argc < 2 || argc > 3)
-		ft_print_error("Número de argumentos inválido");
+		ft_print_error("Número de argumentos inválido.");
 	/* ".cub" control */
 	else if (argc == 2 || argc == 3)
 	{
 		if((tmp = ft_strchr(argv[1], '.')) == NULL)
-			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\"");
+			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
 		if((ft_strncmp(tmp, ".cub\0", 5)) != 0)
-			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\"");
+			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
 		//Aqui iria la funcion de open texturas
 
 		/* "--save" control  */	
 		if (argc == 3)
 			if(ft_strncmp(argv[2], "--save\0", 7) != 0)
-				ft_print_error("Argumento inválido : Prueba escribiendo \"--save\"");
+				ft_print_error("Argumento inválido : Prueba escribiendo \"--save\".");
 	}
 	return(0);
 }

@@ -24,8 +24,8 @@ run:
 all: $(NAME)
 
 clean:
-	@rm -f $(NAME) $(OBJ) ./cub3D *~
-	@rm -rf minilibx_opengl_20191021 libmlx.a libft.a a.out.dSYM
+	@rm -f $(NAME) $(OBJ) ./cub3D
+	@rm -rf minilibx_opengl_20191021 libmlx.a libft.a cub3D.dSYM
 	@make -sC ./opengl/ clean
 	@make -sC ./libft/ fclean
 	@clear
