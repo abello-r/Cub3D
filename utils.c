@@ -144,8 +144,9 @@ int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo ar
 	char *tmp;
 	int i;
 
+
 	i = 0;
-	/* Argumento control */
+	/* Numero de argumento control */
 	if (argc < 2 || argc > 3)
 		ft_print_error("Número de argumentos inválido.");
 	/* ".cub" control */
@@ -155,8 +156,6 @@ int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo ar
 			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
 		if((ft_strncmp(tmp, ".cub\0", 5)) != 0)
 			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
-		//Aqui iria la funcion de open texturas
-
 		/* "--save" control  */	
 		if (argc == 3)
 			if(ft_strncmp(argv[2], "--save\0", 7) != 0)
@@ -165,10 +164,62 @@ int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo ar
 	return(0);
 }
 
-void		ft_print_error(char *s)
+void		ft_print_error(char *s) // Muestra por pantalla un error, con salto de linea y ejecuta un exit.
 {
 	ft_putstr_fd("Error:\n", 1);
 	ft_putstr_fd(s, 1);
 	write(1, "\n", 1);
 	exit(0);
+}
+
+int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y lo pasa al GNL
+{
+	int fd;
+	char *line;
+
+	line = NULL;
+	global->mapa.i = 0;
+	if((fd = open(argv[1], O_RDONLY)) == -1)
+		ft_print_error("El archivo \".cub\" que intentas abrir no existe.");
+
+	while((global->mapa.i = get_next_line(fd, &line)) > 0)
+	{
+		ft_check_lines(global, &line);
+		//printf("%s\n", line);
+		free(line);
+		line = NULL;
+	}
+	ft_check_lines(global, &line);
+	printf("%s\n", line);
+	free(line);
+	line = NULL;
+	return(0);
+}
+
+int		ft_check_lines(t_global *global, char **line) // Checkea las lineas
+{
+	int i = 0;
+	int x = 0;
+	ft_is_space(*line);
+	if(*line[i] == 'R') // RESOLUCION LISTA
+	{
+		global->mapa.tmp1 = *line;
+		x++;
+		ft_check_resolucion(global, x);
+	}
+	else if (*line[i] == 'N') // RUTA A TEXTURA NORTE EN PROCESO
+		ft_check_ruta(global, x, line);
+
+	return(0);
+}
+
+int		ft_is_space(char *str) // Salta los espacios 
+{
+	int i;
+
+	i = 0;
+	while (str[i] == '\n' || str[i] == '\t' || str[i] == ' ' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
+	return(i);
 }

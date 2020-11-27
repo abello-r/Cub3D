@@ -6,6 +6,7 @@
 /*----------------------------------------------------*/
 
 # include "./libft/libft.h"
+# include "./gnl/get_next_line_bonus.h"
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
@@ -46,6 +47,21 @@ typedef struct		s_data // Pantalla e imagén.
 	int		color;
 
 }				t_data;
+
+/*---------------------------------------------------*/
+typedef	struct		s_mapa // Parseo del mapa.
+{
+	int		i;
+	
+	char	*tmp1;
+	char	*tmp2;
+	int		width;
+	int		height;
+
+	
+
+
+}					t_mapa;
 /*---------------------------------------------------*/
 
 typedef	struct		s_textura_norte // Texturas NORTE
@@ -161,6 +177,7 @@ typedef	struct		s_global // Conjunto de estructuras.
 	t_textura_este	textura_este; // Datos de la textura ESTE.
 	t_textura_oeste	textura_oeste; // Datos de la textura OESTE.
 	t_sprite		sprite; // Datos de los Sprites.
+	t_mapa			mapa; // Parseo del mapa.
 }				t_global;
 
 /*----------------------------------------------------*/
@@ -172,6 +189,11 @@ int		key_move(int keycode, t_global *global); // Funcion para el movimiento del 
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
 void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
 void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
-int		ft_control_error(int argc, char **argv);
-void	ft_print_error(char *s);
+int		ft_control_error(int argc, char **argv); // Gestiona los errores de argumentos.
+void	ft_print_error(char *s); // Muestra por pantalla los errores al ejecutar.
+int		ft_parseo(t_global *global, char **argv); // Verifica que el .cub exista y lo pasa al GNL.
+int		ft_check_lines(t_global *global, char **argv); // Verifica las lineas.
+int		ft_check_resolucion(t_global *global, int x); // Chequear la linea de resolución.
+int		ft_is_space(char *line);  // Salta los espacios de las lineas en el GNL.
+int		ft_check_ruta(t_global *global, int x, char **line);
 #endif

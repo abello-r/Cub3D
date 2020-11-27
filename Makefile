@@ -1,6 +1,6 @@
-
+GNL= gnl/get_next_line_bonus.c
 NAME= mini.a
-SRC= cub3d.c utils.c 
+SRC= $(GNL) cub3d.c utils.c check_lines.c
 SRC+= 
 OBJ1=$(SRC:.c=.o)
 OBJ=$(OBJ1:.m=.o)

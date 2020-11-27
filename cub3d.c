@@ -152,6 +152,7 @@ int main (int argc, char **argv)
 {
 	t_global global;
 	ft_control_error(argc, argv);
+	ft_parseo(&global, argv);
 
 	global.data.mlx		= mlx_init();
 	global.data.win		= mlx_new_window(global.data.mlx, screenWidth, screenHeight, "Cub3D");
