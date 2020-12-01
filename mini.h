@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
+/*   Updated: 2020/12/01 13:18:35 by abello-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*----------------------------------------------------*/
 
 #ifndef MINI_H
@@ -21,9 +33,6 @@
 
 # define ESCAPE				53 // Tecla ESCAPE.
 
-
-# define screenWidth		1900 // Anchura de la pantalla.
-# define screenHeight		1080 // Altura de la pantalla.
 # define mapWidth			24	// Ancho del mapa.
 # define mapHeight			24	// Alto del mapa.
 # define num_sprites		19
@@ -53,10 +62,17 @@ typedef	struct		s_mapa // Parseo del mapa.
 {
 	int		i;
 	
-	char	*tmp1;
-	char	*tmp2;
+	char	*ruta_sprite;
+	char	*ruta_norte;
+	char	*ruta_sur;
+	char	*ruta_este;
+	char	*ruta_oeste;
+
 	int		width;
 	int		height;
+	
+	char	*tmp1;
+	char	*tmp2;
 
 	
 
@@ -192,8 +208,14 @@ void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
 int		ft_control_error(int argc, char **argv); // Gestiona los errores de argumentos.
 void	ft_print_error(char *s); // Muestra por pantalla los errores al ejecutar.
 int		ft_parseo(t_global *global, char **argv); // Verifica que el .cub exista y lo pasa al GNL.
-int		ft_check_lines(t_global *global, char **argv); // Verifica las lineas.
+int		ft_check_lines(t_global *global, char *line); // Verifica las lineas.
 int		ft_check_resolucion(t_global *global, int x); // Chequear la linea de resolución.
 int		ft_is_space(char *line);  // Salta los espacios de las lineas en el GNL.
-int		ft_check_ruta(t_global *global, int x, char **line);
+
+int		ft_check_ruta_norte(t_global *global, char *line);
+int		ft_check_ruta_sur(t_global *global, char *line);
+int		ft_check_ruta_este(t_global *global, char *line);
+int		ft_check_ruta_oeste(t_global *global, char *line);
+
+int		ft_check_ruta_sprite(t_global *global, char *line);
 #endif

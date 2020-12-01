@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
+/*   Updated: 2020/12/01 13:06:24 by abello-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini.h"
 
 int worldMap [mapWidth] [mapHeight] = 
@@ -29,7 +41,7 @@ int worldMap [mapWidth] [mapHeight] =
 
 int raycasting(t_global *global)
 {
-	int	w = screenWidth;
+	int	w = global->mapa.width;
 	int x = 0; 
 	int y = 0;
 
@@ -91,11 +103,11 @@ int raycasting(t_global *global)
 		{
 			global->player.perpWallDist = (global->player.mapY - global->player.posY + (1 - global->player.stepY) / 2) / global->player.rayDirY;
 		}
-		global->player.line_height = (screenHeight / global->player.perpWallDist); // Calcula la altura de la linea a pintar.
-		global->player.drawStart = -global->player.line_height / 2 + screenHeight / 2;
+		global->player.line_height = (global->mapa.height / global->player.perpWallDist); // Calcula la altura de la linea a pintar.
+		global->player.drawStart = -global->player.line_height / 2 + global->mapa.height / 2;
 		global->player.drawStart = (global->player.drawStart < 0) ? 0 : global->player.drawStart;
-		global->player.drawEnd = global->player.line_height / 2 + screenHeight / 2;
-		global->player.drawEnd = (global->player.drawEnd >= screenHeight) ? screenHeight - 1 : global->player.drawEnd;
+		global->player.drawEnd = global->player.line_height / 2 + global->mapa.height / 2;
+		global->player.drawEnd = (global->player.drawEnd >= global->mapa.height) ? global->mapa.height - 1 : global->player.drawEnd;
 	/*-------------------------------------------------------------------------------------------------------*/
 
 		global->player.texNum = (int)worldMap[global->player.mapX][global->player.mapY]; // DESDE AQUI EMPIEZAN LAS TEXTURAS.
@@ -119,7 +131,7 @@ int raycasting(t_global *global)
 			global->player.texX = global->player.tex_width - global->player.texX - 1;
 		}
 		global->player.step = 1.0 * global->player.tex_height / global->player.line_height;
-		global->player.texPos = (global->player.drawStart - screenHeight / 2 + global->player.line_height / 2) * global->player.step;
+		global->player.texPos = (global->player.drawStart - global->mapa.height / 2 + global->player.line_height / 2) * global->player.step;
 		y = 0;
 		while (y < global->player.drawStart) // Color del cielo.
 		{
@@ -135,7 +147,7 @@ int raycasting(t_global *global)
 			global->data.color = global->player.buffer[global->player.tex_width * global->player.texY + global->player.texX]; 
 			my_mlx_pixel_put(&global->data, x, y, global->data.color);
 		}
-		while (y < screenHeight) //Color del suelo.
+		while (y < global->mapa.height) //Color del suelo.
 		{
 			my_mlx_pixel_put(&global->data, x, y, 0x555555);
 			y++;
@@ -151,15 +163,16 @@ int raycasting(t_global *global)
 int main (int argc, char **argv)
 {
 	t_global global;
+	ft_init_structs(&global); // Inicializar valores
 	ft_control_error(argc, argv);
 	ft_parseo(&global, argv);
-
+	
 	global.data.mlx		= mlx_init();
-	global.data.win		= mlx_new_window(global.data.mlx, screenWidth, screenHeight, "Cub3D");
-	global.data.img		= mlx_new_image(global.data.mlx, screenWidth, screenHeight);
+	global.data.win		= mlx_new_window(global.data.mlx, global.mapa.width, global.mapa.height, "Cub3D");
+	global.data.img		= mlx_new_image(global.data.mlx, global.mapa.width, global.mapa.height);
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
-	ft_init_structs(&global); // Inicializar valores
+	//ft_init_structs(&global); // Inicializar valores
 	ft_fill_texture(&global); // Obtener texturas
 	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global); // Hook para las teclas
 	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting

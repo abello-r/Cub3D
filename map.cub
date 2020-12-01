@@ -1,10 +1,10 @@
-R 2020 1000    																
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+R 6000 6000
+NO srcs/lavaboy.xpm
+SO srcs/bloque.xpm
+WE srcs/puerta.xpm
+EA srcs/flor.xpm
 
-S ./path_to_the_sprite_texture
+S srcs/barril.xpm
 F 220,100,0
 C 225,30,0
 

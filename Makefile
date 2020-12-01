@@ -1,6 +1,6 @@
 GNL= gnl/get_next_line_bonus.c
 NAME= mini.a
-SRC= $(GNL) cub3d.c utils.c check_lines.c
+SRC= $(GNL) cub3d.c utils.c check_rutas_lines.c check_sfc_lines.c
 SRC+= 
 OBJ1=$(SRC:.c=.o)
 OBJ=$(OBJ1:.m=.o)
@@ -17,7 +17,7 @@ run:
 	@clear
 	@echo "\n\033[32m"*------------------------------------------------------------------------------------*\\nTienes ejecutando los archivos :" \033[33m"$(SRC) libft.a libmlx.a"\033[0m\n"
 	@echo "\n\033[32m"Pulsa \(ESCAPE\) para detener.\\n*------------------------------------------------------------------------------------*"\033[0m\n"
-	@gcc -Wall -Wextra -Werror -fsanitize=address -g -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a libmlx.a -o cub3D
+	@gcc -Wall -Wextra -Werror -g -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a libmlx.a -o cub3D
 	@rm -rf cub3D.dSYM
 	
 
