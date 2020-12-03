@@ -5,8 +5,8 @@ WE srcs/puerta.xpm
 EA srcs/flor.xpm
 
 S srcs/barril.xpm
-F 220,100,0
-C 225,30,0
+F 0,2,0
+C 1,1,1
 
 1111111111111111111111111
 1000000000000000000000001

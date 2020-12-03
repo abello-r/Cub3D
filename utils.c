@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/01 13:24:01 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/03 11:44:09 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,10 @@ int		ft_check_lines(t_global *global, char *line) // Checkea las lineas
 		ft_check_ruta_oeste(global, line);
 	else if (line[i] == 'S' && line[i + 1] == ' ')
 		ft_check_ruta_sprite(global, line);
+	else if (line[i] == 'F' && line[i + 1] == ' ')
+		ft_check_color_f(global, line);
+	else if (line[i] == 'C' && line[i + 1] == ' ')
+		ft_check_color_c(global, line);
 	return(0);
 }
 

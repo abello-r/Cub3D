@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/01 13:06:24 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/03 11:49:03 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int raycasting(t_global *global)
 		y = 0;
 		while (y < global->player.drawStart) // Color del cielo.
 		{
-			my_mlx_pixel_put(&global->data, x, y, 0x1E1E1E);
+			my_mlx_pixel_put(&global->data, x, y, global->mapa.color_c);
 			y++;
 		}
 		y = global->player.drawStart;
@@ -149,7 +149,7 @@ int raycasting(t_global *global)
 		}
 		while (y < global->mapa.height) //Color del suelo.
 		{
-			my_mlx_pixel_put(&global->data, x, y, 0x555555);
+			my_mlx_pixel_put(&global->data, x, y, global->mapa.color_f);
 			y++;
 		}
 		x++;
@@ -174,7 +174,7 @@ int main (int argc, char **argv)
 
 	//ft_init_structs(&global); // Inicializar valores
 	ft_fill_texture(&global); // Obtener texturas
-	mlx_hook(global.data.win, 02, (1L<<0), key_move, &global); // Hook para las teclas
+	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global); // Hook para las teclas
 	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
 	mlx_loop(global.data.mlx); // Loop general
 }

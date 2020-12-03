@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_lines.c                                      :+:      :+:    :+:   */
+/*   check_rutas_lines.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:26 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/01 13:06:27 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/03 12:17:38 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int		ft_check_resolucion(t_global *global, int x)  // Esta función revisa la linea de resolución.
+int		ft_check_resolucion(t_global *global, int x)
 { /*CAMBIAR LA VARIABLE WIDHT Y HEIIGHT POR UNA MAS PEQUEÑA PARA LA NORMINETTE CABRON */
 	while (ft_is_space(&global->mapa.tmp1[x]))
 		x++;
@@ -78,6 +78,7 @@ int		ft_check_ruta_sur(t_global *global, char *line)
 	tmp = ft_strdup(line + x);
 	global->mapa.ruta_sur = ft_strtrim(tmp, " ");
 	free(tmp);
+	tmp = NULL;
 	return (0);
 }
 
@@ -98,6 +99,7 @@ int		ft_check_ruta_este(t_global *global, char *line)
 	tmp = ft_strdup(line + x);
 	global->mapa.ruta_este = ft_strtrim(tmp, " ");
 	free(tmp);
+	tmp = NULL;
 	return (0);
 }
 
@@ -118,5 +120,6 @@ int		ft_check_ruta_oeste(t_global *global, char *line)
 	tmp = ft_strdup(line + x);
 	global->mapa.ruta_oeste = ft_strtrim(tmp, " ");
 	free(tmp);
+	tmp = NULL;
 	return (0);
 }

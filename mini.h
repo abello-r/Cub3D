@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/01 13:18:35 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/03 12:14:28 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef	struct		s_mapa // Parseo del mapa.
 
 	int		width;
 	int		height;
+	int		color_f;
+	int		color_c;
 	
 	char	*tmp1;
 	char	*tmp2;
@@ -218,4 +220,6 @@ int		ft_check_ruta_este(t_global *global, char *line);
 int		ft_check_ruta_oeste(t_global *global, char *line);
 
 int		ft_check_ruta_sprite(t_global *global, char *line);
+void	ft_check_color_f(t_global *global, char *line);
+void	ft_check_color_c(t_global *global, char *line);
 #endif
