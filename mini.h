@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/03 12:14:28 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:20:37 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
+# include <stdlib.h>
 
 # define KEY_UP				13 // Arriba.
 # define KEY_DOWN			1 // Abajo.
@@ -61,6 +62,8 @@ typedef struct		s_data // Pantalla e imagén.
 typedef	struct		s_mapa // Parseo del mapa.
 {
 	int		i;
+	int		old;
+	int		xpvu; // Equis por vuelta
 	
 	char	*ruta_sprite;
 	char	*ruta_norte;
@@ -222,4 +225,6 @@ int		ft_check_ruta_oeste(t_global *global, char *line);
 int		ft_check_ruta_sprite(t_global *global, char *line);
 void	ft_check_color_f(t_global *global, char *line);
 void	ft_check_color_c(t_global *global, char *line);
+
+void	ft_check_map(t_global *global, char *line);
 #endif

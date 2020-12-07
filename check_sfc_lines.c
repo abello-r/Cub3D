@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:11:26 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/03 12:14:17 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/04 11:45:42 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void		ft_check_color_f(t_global *global, char *line)
 		x = x + 2;
 	while (tmp[x] != '\0')
 	{
+		if (tmp[x] == ',' && tmp[x + 1] == ',')
+			ft_print_error("Sólo 1 coma para separar");
 		if (!ft_isdigit(tmp[x]) && (tmp[x] != ',' && tmp[x] != ' '))
 			ft_print_error(("Hay un carácter inválido en la línea \"F\""));
 		else if (ft_isdigit(tmp[x]))
@@ -78,6 +80,8 @@ void		ft_check_color_c(t_global *global, char *line)
 		x = x + 2;
 	while (tmp[x] != '\0')
 	{
+		if (tmp[x] == ',' && tmp[x + 1] == ',')
+			ft_print_error("Sólo 1 coma para separar");
 		if (!ft_isdigit(tmp[x]) && (tmp[x] != ',' && tmp[x] != ' '))
 			ft_print_error(("Hay un carácter inválido en la línea \"C\""));
 		else if (ft_isdigit(tmp[x]))
@@ -88,5 +92,5 @@ void		ft_check_color_c(t_global *global, char *line)
 	free(tmp);
 	tmp = NULL;
 	global->mapa.color_c = ft_atoi(colorhx);
-	global->mapa.color_f > 255255255 ? ft_print_error("Max (255,255,255)") : 0;
+	global->mapa.color_c > 255255255 ? ft_print_error("Max (255,255,255)") : 0;
 }

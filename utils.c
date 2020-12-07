@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/03 11:44:09 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/07 11:48:22 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ void		ft_fill_texture(t_global *global)
 void		ft_init_structs(t_global *global)
 {
 	/*	Inicializar valores de variables en la estructura	*/
-
 	global->player.posX =	4 - 0.5; /* Posicion inicial en x */
 	global->player.posY =	4 + 0.5; /* Posicion inicial en y */
 	global->player.dirX =	-1;
@@ -150,6 +149,10 @@ void		ft_init_structs(t_global *global)
 	global->sprite.x = 0;
 	global->sprite.y = 0;
 	global->mapa.ruta_norte = NULL;
+	global->mapa.ruta_sur = NULL;
+	global->mapa.ruta_este = NULL;
+	global->mapa.ruta_oeste = NULL;
+	global->mapa.ruta_sprite = NULL;
 	global->mapa.tmp1 = NULL;
 	global->mapa.tmp2 = NULL;
 }
@@ -204,7 +207,7 @@ int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y l
 		line = NULL;
 		x++;
 	}
-	//ft_check_lines(global, line);
+	ft_check_lines(global, line);
 	free(line);
 	line = NULL;
 	return(0);
@@ -237,6 +240,8 @@ int		ft_check_lines(t_global *global, char *line) // Checkea las lineas
 		ft_check_color_f(global, line);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		ft_check_color_c(global, line);
+	else if (line[i] == '1')
+		ft_check_map(global, line);
 	return(0);
 }
 

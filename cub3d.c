@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/03 11:49:03 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/04 11:41:10 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,9 @@ int main (int argc, char **argv)
 	global.data.img		= mlx_new_image(global.data.mlx, global.mapa.width, global.mapa.height);
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
-	//ft_init_structs(&global); // Inicializar valores
 	ft_fill_texture(&global); // Obtener texturas
 	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global); // Hook para las teclas
+	mlx_hook(global.data.win, 03, (0L<<0), key_move, &global); // Hook para las teclas
 	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
 	mlx_loop(global.data.mlx); // Loop general
 }
