@@ -17,9 +17,8 @@ run:
 	@clear
 	@echo "\n\033[32m"*------------------------------------------------------------------------------------*\\nTienes ejecutando los archivos :" \033[33m"$(SRC) libft.a libmlx.a"\033[0m\n"
 	@echo "\n\033[32m"Pulsa \(ESCAPE\) para detener.\\n*------------------------------------------------------------------------------------*"\033[0m\n"
-	@gcc -Wall -Wextra -Werror -g -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a libmlx.a -o cub3D
+	@gcc -Wall -Wextra -Werror -fsanitize=address -g3 -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a libmlx.a -o cub3D
 	@rm -rf cub3D.dSYM
-	
 
 all: $(NAME)
 

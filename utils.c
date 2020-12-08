@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/07 11:48:22 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:42:27 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void		ft_init_structs(t_global *global)
 	global->mapa.ruta_sprite = NULL;
 	global->mapa.tmp1 = NULL;
 	global->mapa.tmp2 = NULL;
+	global->mapa.xpvu = 0;
 }
 
 int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo argumento con ".cub" y el tercer argumento con "--save".
@@ -208,8 +209,10 @@ int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y l
 		x++;
 	}
 	ft_check_lines(global, line);
+	close(fd);
 	free(line);
 	line = NULL;
+	ft_fill_map(global, argv);
 	return(0);
 }
 

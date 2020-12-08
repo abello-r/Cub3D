@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/07 14:20:37 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:41:00 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,4 +227,5 @@ void	ft_check_color_f(t_global *global, char *line);
 void	ft_check_color_c(t_global *global, char *line);
 
 void	ft_check_map(t_global *global, char *line);
+void	ft_fill_map(t_global *global, char **argv);
 #endif
