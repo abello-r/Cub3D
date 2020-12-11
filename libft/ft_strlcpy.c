@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abello-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 18:35:49 by abello-r          #+#    #+#             */
-/*   Updated: 2020/01/24 15:18:59 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/11 14:09:11 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		c1++;
 		c2--;
 	}
-	dst[c1] = '\0';
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/08 13:42:27 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:18:18 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo ar
 
 void		ft_print_error(char *s) // Muestra por pantalla un error, con salto de linea y ejecuta un exit.
 {
-	ft_putstr_fd("Error:\n", 1);
+	ft_putstr_fd("Error\n", 1);
 	ft_putstr_fd(s, 1);
 	write(1, "\n", 1);
 	exit(0);
@@ -193,12 +193,14 @@ void		ft_print_error(char *s) // Muestra por pantalla un error, con salto de lin
 
 int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y lo pasa al GNL
 {
-	int fd;
-	int x = 0;
-	char *line;
+	char	*line;
+	int		fd;
+	int		x;
 
+	x = 0;
 	line = NULL;
 	global->mapa.i = 0;
+
 	if((fd = open(argv[1], O_RDONLY)) == -1)
 		ft_print_error("El archivo \".cub\" que intentas abrir no existe.");
 	while((global->mapa.i = get_next_line(fd, &line)) > 0)
@@ -212,6 +214,7 @@ int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y l
 	close(fd);
 	free(line);
 	line = NULL;
+	ft_reservar_map(global);
 	ft_fill_map(global, argv);
 	return(0);
 }
