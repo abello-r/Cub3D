@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/09 11:52:41 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:12:54 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ typedef	struct		s_mapa // Parseo del mapa.
 	
 	char	*tmp1;
 	char	*tmp2;
-
-	
-
 
 }					t_mapa;
 /*---------------------------------------------------*/
@@ -231,4 +228,5 @@ void	ft_check_map(t_global *global, char *line);
 void	ft_reservar_map(t_global *global);
 void	ft_fill_map(t_global *global, char **argv);
 void	ft_check_memoria (t_global *global);
+void	ft_flood_fill(t_global *global, int x, int y);
 #endif

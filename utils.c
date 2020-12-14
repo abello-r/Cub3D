@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/10 13:18:18 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/14 13:48:01 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ void		ft_fill_texture(t_global *global)
 void		ft_init_structs(t_global *global)
 {
 	/*	Inicializar valores de variables en la estructura	*/
-	global->player.posX =	4 - 0.5; /* Posicion inicial en x */
-	global->player.posY =	4 + 0.5; /* Posicion inicial en y */
+	//global->player.posX =	4 - 0.5; /* Posicion inicial en x */
+	//global->player.posY =	4 + 0.5; /* Posicion inicial en y */
 	global->player.dirX =	-1;
 	global->player.dirY =	0;
 	global->player.planeX =	0;
