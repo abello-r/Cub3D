@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/14 14:12:54 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/17 12:54:31 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@
 
 # define ESCAPE				53 // Tecla ESCAPE.
 
-# define mapWidth			24	// Ancho del mapa.
-# define mapHeight			24	// Alto del mapa.
 # define num_sprites		19
 
 /*----------------------------------------------------*/
@@ -130,6 +128,7 @@ typedef struct		s_sprite // Sprites.
 typedef struct		s_player // Datos de Jugador
 {
 	int		*N; // Jugador
+	char	nswe;
 
 	double	posX; // Posición inicial en x.
 	double	posY; // Posición inicial en y.
@@ -201,8 +200,6 @@ typedef	struct		s_global // Conjunto de estructuras.
 
 /*----------------------------------------------------*/
 
-extern int worldMap[mapWidth][mapHeight];
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
 int		key_move(int keycode, t_global *global); // Funcion para el movimiento del jugador y camara
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
@@ -229,4 +226,8 @@ void	ft_reservar_map(t_global *global);
 void	ft_fill_map(t_global *global, char **argv);
 void	ft_check_memoria (t_global *global);
 void	ft_flood_fill(t_global *global, int x, int y);
+char	**ft_cpy_memory(t_global *global, char **mem);
+void	ft_nswe(t_global *global);
+int		ft_rgb (int r, int g, int b);
+void	ft_free_var(char **color, char *tmp);
 #endif

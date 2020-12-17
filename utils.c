@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/14 13:48:01 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/17 14:20:19 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char *dst;
 
-	dst = data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
+	dst = (char *)data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 /*---------------------------------------------------- Movimiento dentro del cub3d */
@@ -34,44 +34,44 @@ int		key_move(int keycode, t_global *global)
 
 	if (keycode == KEY_UP) // Mover Arriba REVISADA
 	{
-		if (!worldMap[(int)(global->player.posX + global->player.dirX * global->player.moveSpeed)][((int)global->player.posY)])
+		if (global->mapa.memoria[(int)(global->player.posX + global->player.dirX * global->player.moveSpeed)][((int)global->player.posY)] == '0')
 		{
 			global->player.posX += global->player.dirX * global->player.moveSpeed;
 		}
-		if (!worldMap[(int)global->player.posX][(int)(global->player.posY + global->player.dirY * global->player.moveSpeed)])
+		if (global->mapa.memoria[(int)global->player.posX][(int)(global->player.posY + global->player.dirY * global->player.moveSpeed)] == '0')
 		{
 			global->player.posY += global->player.dirY * global->player.moveSpeed;
 		}
 	}
 	if (keycode == KEY_DOWN) // Mover Abajo REVISADA
 	{
-		if (!worldMap[(int)(global->player.posX - global->player.dirX * global->player.moveSpeed)][(int)global->player.posY])
+		if (global->mapa.memoria[(int)(global->player.posX - global->player.dirX * global->player.moveSpeed)][(int)global->player.posY] == '0')
 		{
 			global->player.posX -= global->player.dirX * global->player.moveSpeed;
 		} 
-		if (!worldMap[(int)global->player.posX][(int)(global->player.posY - global->player.dirY * global->player.moveSpeed)])
+		if (global->mapa.memoria[(int)global->player.posX][(int)(global->player.posY - global->player.dirY * global->player.moveSpeed)] == '0')
 		{
 			global->player.posY -= global->player.dirY * global->player.moveSpeed;
 		}
 	}
 	if (keycode == KEY_RIGHT) // Mover derecha REVISADA
 	{
-		if (!worldMap[(int)(global->player.posX)][((int)(global->player.posY - global->player.dirX * global->player.moveSpeed))])
+		if (global->mapa.memoria[(int)(global->player.posX)][((int)(global->player.posY - global->player.dirX * global->player.moveSpeed))] == '0')
 		{
 			global->player.posY -= global->player.dirX * global->player.moveSpeed;
 		}
-		if (!worldMap[(int)(global->player.posX + global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)])
+		if (global->mapa.memoria[(int)(global->player.posX + global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)] == '0')
 		{
 			global->player.posX += global->player.dirY * global->player.moveSpeed;
 		}
 	}
 	if (keycode == KEY_LEFT) // Mover Izquierda REVISADA
 	{
-		if (!worldMap[(int)(global->player.posX)][((int)(global->player.posY + global->player.dirX * global->player.moveSpeed))])
+		if (global->mapa.memoria[(int)(global->player.posX)][((int)(global->player.posY + global->player.dirX * global->player.moveSpeed))] == '0')
 		{
 			global->player.posY += global->player.dirX * global->player.moveSpeed;
 		}
-		if (!worldMap[(int)(global->player.posX - global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)])
+		if (global->mapa.memoria[(int)(global->player.posX - global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)] == '0')
 		{
 			global->player.posX -= global->player.dirY * global->player.moveSpeed;
 		}
@@ -129,10 +129,10 @@ void		ft_fill_texture(t_global *global)
 		ft_print_error("La textura NORTE que has introducido no existe.");
 	else if(!(global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_sur, &global->player.tex_width, &global->player.tex_height)))
 		ft_print_error("La textura SUR que has introducido no existe.");
-	else if(!(global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_este, &global->player.tex_width, &global->player.tex_height)))
-		ft_print_error("La textura ESTE que has introducido no existe.");
-	else if(!(global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_oeste, &global->player.tex_width, &global->player.tex_height)))
+	else if(!(global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_este, &global->player.tex_width, &global->player.tex_height)))
 		ft_print_error("La textura OESTE que has introducido no existe.");
+	else if(!(global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_oeste, &global->player.tex_width, &global->player.tex_height)))
+		ft_print_error("La textura ESTE que has introducido no existe.");
 }
 
 void		ft_init_structs(t_global *global)
@@ -246,7 +246,8 @@ int		ft_check_lines(t_global *global, char *line) // Checkea las lineas
 		ft_check_color_f(global, line);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		ft_check_color_c(global, line);
-	else if (line[i] == '1')
+	else if (line[i] == ' ' || line[i] == '0' 
+		|| line[i] == '1' || line[i] == '2')
 		ft_check_map(global, line);
 	return(0);
 }

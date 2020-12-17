@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:11:26 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/04 11:45:42 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/17 13:04:46 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,62 +35,82 @@ int			ft_check_ruta_sprite(t_global *global, char *line)
 
 void		ft_check_color_f(t_global *global, char *line)
 {
-	char	colorhx[20];
-	char	*tmp;
 	int		x;
-	int		i;
+	int		c;
+	char	*tmp;
+	char	**color;
 
 	x = 1;
-	i = 0;
 	tmp = ft_strdup(line);
 	while (tmp[x] == ' ')
 		x++;
 	if (ft_strncmp((tmp + x), "F ", 2) == 0)
 		x = x + 2;
+	color = ft_split(&tmp[x], ',');
+	c = ft_rgb(ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2]));
 	while (tmp[x] != '\0')
 	{
 		if (tmp[x] == ',' && tmp[x + 1] == ',')
 			ft_print_error("Sólo 1 coma para separar");
 		if (!ft_isdigit(tmp[x]) && (tmp[x] != ',' && tmp[x] != ' '))
 			ft_print_error(("Hay un carácter inválido en la línea \"F\""));
-		else if (ft_isdigit(tmp[x]))
-			colorhx[i++] = tmp[x];
 		x++;
 	}
-	colorhx[i] = '\0';
-	free(tmp);
-	tmp = NULL;
-	global->mapa.color_f = ft_atoi(colorhx);
-	global->mapa.color_f > 255255255 ? ft_print_error("Max (255,255,255)") : 0;
+	ft_free_var(color, tmp);
+	free(color);
+	global->mapa.color_f = c;
 }
 
 void		ft_check_color_c(t_global *global, char *line)
 {
-	char	colorhx[20];
-	char	*tmp;
 	int		x;
-	int		i;
+	int		c;
+	char	*tmp;
+	char	**color;
 
 	x = 1;
-	i = 0;
 	tmp = ft_strdup(line);
 	while (tmp[x] == ' ')
 		x++;
 	if (ft_strncmp((tmp + x), "C ", 2) == 0)
 		x = x + 2;
+	color = ft_split(&tmp[x], ',');
+	c = ft_rgb(ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2]));
 	while (tmp[x] != '\0')
 	{
 		if (tmp[x] == ',' && tmp[x + 1] == ',')
 			ft_print_error("Sólo 1 coma para separar");
 		if (!ft_isdigit(tmp[x]) && (tmp[x] != ',' && tmp[x] != ' '))
 			ft_print_error(("Hay un carácter inválido en la línea \"C\""));
-		else if (ft_isdigit(tmp[x]))
-			colorhx[i++] = tmp[x];
 		x++;
 	}
-	colorhx[i] = '\0';
+	ft_free_var(color, tmp);
+	free(color);
+	global->mapa.color_c = c;
+}
+
+int			ft_rgb(int r, int g, int b)
+{
+	int rgb;
+
+	if (r > 255 || g > 255 || b > 255)
+		ft_print_error("El RGB máximo es de 255");
+	rgb = r;
+	rgb = (rgb << 8) + g;
+	rgb = (rgb << 8) + b;
+	return (rgb);
+}
+
+void		ft_free_var(char **color, char *tmp)
+{
+	int i;
+
+	i = 0;
+	while (color[i])
+	{
+		free(color[i]);
+		i++;
+	}
 	free(tmp);
 	tmp = NULL;
-	global->mapa.color_c = ft_atoi(colorhx);
-	global->mapa.color_c > 255255255 ? ft_print_error("Max (255,255,255)") : 0;
 }
