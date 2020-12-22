@@ -6,13 +6,13 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/17 14:25:31 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 13:44:54 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int raycasting(t_global *global)
+int			raycasting(t_global *global)
 {
 	int	w = global->mapa.width;
 	int x = 0;
@@ -108,7 +108,7 @@ int raycasting(t_global *global)
 		y = 0;
 		while (y < global->player.drawStart) // Color del cielo.
 		{
-			my_mlx_pixel_put(&global->data, x, y, global->mapa.color_c);
+			my_mlx_pixel_put(global, x, y, global->mapa.color_c);
 			y++;
 		}
 		y = global->player.drawStart;
@@ -118,17 +118,19 @@ int raycasting(t_global *global)
 			global->player.texY = (int)global->player.texPos;
 			global->player.texPos += global->player.step;
 			global->data.color = global->player.buffer[global->player.tex_width * global->player.texY + global->player.texX]; 
-			my_mlx_pixel_put(&global->data, x, y, global->data.color);
+			my_mlx_pixel_put(global, x, y, global->data.color);
 		}
 		while (y < global->mapa.height) //Color del suelo.
 		{
-			my_mlx_pixel_put(&global->data, x, y, global->mapa.color_f);
+			my_mlx_pixel_put(global, x, y, global->mapa.color_f);
 			y++;
 		}
-		x++;
 		/* AQUI EMPIEZA EL CASTING DE LOS SPRITES */
+		global->sprite.z_buffer[x] = global->player.perpWallDist;
 		/* AQUI TERMINA EL CASTING DE LOS SPRITES */
+		x++;
 	}
+		ft_ray_sprite(global);
 	mlx_put_image_to_window(global->data.mlx, global->data.win, global->data.img, 0, 0);
 	return (1);
 }
@@ -148,5 +150,6 @@ int main (int argc, char **argv)
 	ft_fill_texture(&global); // Obtener texturas
 	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global); // Hook para las teclas
 	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
+	ft_screenshot(&global);
 	mlx_loop(global.data.mlx); // Loop general
 }

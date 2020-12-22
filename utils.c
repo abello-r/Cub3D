@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/17 14:20:19 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 12:51:02 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 /*---------------------------------------------------- Insertar pixel más rapido que la original */
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_global *global, int x, int y, int color)
 {
 	char *dst;
 
-	dst = (char *)data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
+	dst = (char *)global->data.addr + (y * global->data.line_lenght + x * (global->data.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 /*---------------------------------------------------- Movimiento dentro del cub3d */
@@ -120,6 +120,7 @@ void		ft_get_texture(t_global *global)
 			global->player.textura = global->textura_oeste.tex_oeste;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_oeste.bits_per_pixel, &global->textura_oeste.line_lenght, &global->textura_oeste.endian);
 		}
+		global->sprite.buffer = (unsigned int *)mlx_get_data_addr(global->sprite.tex_add, &global->sprite.bits_per_pixel, &global->sprite.line_lenght, &global->sprite.endian);
 }
 
 void		ft_fill_texture(t_global *global)
@@ -133,6 +134,8 @@ void		ft_fill_texture(t_global *global)
 		ft_print_error("La textura OESTE que has introducido no existe.");
 	else if(!(global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_oeste, &global->player.tex_width, &global->player.tex_height)))
 		ft_print_error("La textura ESTE que has introducido no existe.");
+	if(!(global->sprite.tex_add = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_sprite, &global->sprite.tex_width, &global->sprite.tex_height)))
+		ft_print_error("La textura del SPRITE no existe");
 }
 
 void		ft_init_structs(t_global *global)
@@ -146,8 +149,6 @@ void		ft_init_structs(t_global *global)
 	global->player.planeY =	0.66;
 	global->player.moveSpeed = 0.3; /* Movimiento del jugador */
 	global->player.rotSpeed = 0.29; /* Movimiento de la camara */
-	global->sprite.x = 0;
-	global->sprite.y = 0;
 	global->mapa.ruta_norte = NULL;
 	global->mapa.ruta_sur = NULL;
 	global->mapa.ruta_este = NULL;
@@ -156,6 +157,7 @@ void		ft_init_structs(t_global *global)
 	global->mapa.tmp1 = NULL;
 	global->mapa.tmp2 = NULL;
 	global->mapa.xpvu = 0;
+	global->sprite.num = 0;
 }
 
 int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo argumento con ".cub" y el tercer argumento con "--save".

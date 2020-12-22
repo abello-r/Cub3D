@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/17 12:54:31 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 13:42:15 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,55 @@ typedef	struct		s_textura_oeste // Texturas OESTE
 
 typedef struct		s_sprite // Sprites.
 {
-	int				i;
+	double			distance;
+	int				num;
+	int				tmp_num;
+	int				*order;
+
+	char			*sprites;
+
+	
+	int 			bits_per_pixel;
+	int 			line_lenght; 
+	int 			endian;
+	void			*tex_add;
+	unsigned int	*buffer;
+
+
+	double			*z_buffer;
+	int				tex_width;
+	int				tex_height;
+
 	double			x;
 	double			y;
-	int				textura;
-	unsigned int	*z_buffer;
-	char			*sprites;
+	
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+	int				sprite_screen_x;
+	
+	int				sprite_height;
+	int				sprite_width;
+	
+	int				drawstart_x;
+	int				drawend_x;
+
+	int				drawstart_y;
+	int				drawend_y;
+
+	int				stripe;
+	int				tex_x;
+	int				tex_y;
+	int				d;
+	
 }					t_sprite;
 
+typedef struct		s_xysp //Distancia y posicion de Sprites.
+{
+	double			rel;
+	double			x;
+	double			y;
+}					t_xysp;
 /*----------------------------------------------------*/
 
 typedef struct		s_player // Datos de Jugador
@@ -194,13 +235,14 @@ typedef	struct		s_global // Conjunto de estructuras.
 	t_textura_sur	textura_sur; // Datos de la textura SUR.
 	t_textura_este	textura_este; // Datos de la textura ESTE.
 	t_textura_oeste	textura_oeste; // Datos de la textura OESTE.
-	t_sprite		sprite; // Datos de los Sprites.
 	t_mapa			mapa; // Parseo del mapa.
+	t_sprite		sprite; // Datos de los Sprites.
+	t_xysp			*xysp; // Distancia y posicion de los Sprites.
 }				t_global;
 
 /*----------------------------------------------------*/
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color); // Función auxiliar para imprimir pixeles.
+void	my_mlx_pixel_put(t_global *global, int x, int y, int color); // Función auxiliar para imprimir pixeles.
 int		key_move(int keycode, t_global *global); // Funcion para el movimiento del jugador y camara
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
 void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
@@ -220,6 +262,7 @@ int		ft_check_ruta_oeste(t_global *global, char *line);
 int		ft_check_ruta_sprite(t_global *global, char *line);
 void	ft_check_color_f(t_global *global, char *line);
 void	ft_check_color_c(t_global *global, char *line);
+int		ft_rgb (int r, int g, int b);
 
 void	ft_check_map(t_global *global, char *line);
 void	ft_reservar_map(t_global *global);
@@ -228,6 +271,13 @@ void	ft_check_memoria (t_global *global);
 void	ft_flood_fill(t_global *global, int x, int y);
 char	**ft_cpy_memory(t_global *global, char **mem);
 void	ft_nswe(t_global *global);
-int		ft_rgb (int r, int g, int b);
+void	ft_nswe_complemento(t_global *global);
 void	ft_free_var(char **color, char *tmp);
+
+void		ft_res_sprites(t_global *global);
+void		ft_sort_sprites(t_global *global);
+void		ft_ray_sprite(t_global *global);
+
+void		ft_screenshot(t_global *global);
+int			raycasting(t_global *global);
 #endif
