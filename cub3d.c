@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 13:44:54 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:49:09 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int			raycasting(t_global *global)
 		/* AQUI TERMINA EL CASTING DE LOS SPRITES */
 		x++;
 	}
-		ft_ray_sprite(global);
+	ft_ray_sprite(global);
 	mlx_put_image_to_window(global->data.mlx, global->data.win, global->data.img, 0, 0);
 	return (1);
 }
@@ -139,7 +139,6 @@ int main (int argc, char **argv)
 {
 	t_global global;
 	ft_init_structs(&global); // Inicializar valores
-	ft_control_error(argc, argv);
 	ft_parseo(&global, argv);
 	
 	global.data.mlx		= mlx_init();
@@ -148,8 +147,9 @@ int main (int argc, char **argv)
 	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
 
 	ft_fill_texture(&global); // Obtener texturas
+	ft_control_error(&global, argc, argv);
 	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global); // Hook para las teclas
+	mlx_hook(global.data.win, 03, (0L<<0), key_move, &global); // Hook para las teclas
 	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
-	ft_screenshot(&global);
-	mlx_loop(global.data.mlx); // Loop general
+	mlx_loop(global.data.mlx); // Loop general	
 }

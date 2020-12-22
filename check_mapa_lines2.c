@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 10:13:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/21 16:10:21 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:39:03 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,8 @@ void		ft_check_memoria(t_global *global) // Primera leída
 	copy_mem = ft_cpy_memory(global, global->mapa.memoria);
 	ft_res_sprites(global);
 	ft_flood_fill(global, (int)global->player.posX, (int)global->player.posY);
-	i = 0;
-	/*while (i < global->sprite.num)
-	{
-		printf("POS = x[%f] y[%f]\n", global->xysp[i].x, global->xysp[i].y);
-		i++;
-	}*/
 	global->mapa.memoria = ft_cpy_memory(global, copy_mem);
+	ft_free_matriz(global, copy_mem);
 	ft_nswe(global);
 	
 }
@@ -116,4 +111,17 @@ void		ft_fill_map(t_global *global, char **argv)
 	line = NULL;
 	close(fd);
 	ft_check_memoria(global);
+}
+
+void		ft_free_matriz(t_global *global, char **matriz)
+{
+	int i;
+
+	i = 0;
+	while (i < global->mapa.xpvu)
+	{
+		free(matriz[i]);
+		i++;
+	}
+	free(matriz);
 }

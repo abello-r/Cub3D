@@ -17,14 +17,14 @@ run:
 	@clear
 	@echo "\n\033[32m"*------------------------------------------------------------------------------------*\\nTienes ejecutando los archivos :" \033[33m"$(SRC) libft.a libmlx.a"\033[0m\n"
 	@echo "\n\033[32m"Pulsa \(ESCAPE\) para detener.\\n*------------------------------------------------------------------------------------*"\033[0m\n"
-	@gcc -Wall -Wextra -Werror -fsanitize=address -g3 -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a libmlx.a -o cub3D
+	@gcc -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a libmlx.a -o cub3D
 	@rm -rf cub3D.dSYM
 
 all: $(NAME)
 
 clean:
 	@rm -f $(NAME) $(OBJ) ./cub3D
-	@rm -rf minilibx_opengl_20191021 libmlx.a libft.a cub3D.dSYM
+	@rm -rf minilibx_opengl_20191021 libmlx.a libft.a cub3D.dSYM cub3D.bmp
 	@make -sC ./opengl/ clean
 	@make -sC ./libft/ fclean
 	@clear

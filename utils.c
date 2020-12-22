@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 12:51:02 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:42:28 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,8 @@ void		ft_init_structs(t_global *global)
 	global->player.dirY =	0;
 	global->player.planeX =	0;
 	global->player.planeY =	0.66;
-	global->player.moveSpeed = 0.3; /* Movimiento del jugador */
-	global->player.rotSpeed = 0.29; /* Movimiento de la camara */
+	global->player.moveSpeed = 0.21; /* Movimiento del jugador */
+	global->player.rotSpeed = 0.14; /* Movimiento de la camara */
 	global->mapa.ruta_norte = NULL;
 	global->mapa.ruta_sur = NULL;
 	global->mapa.ruta_este = NULL;
@@ -160,7 +160,7 @@ void		ft_init_structs(t_global *global)
 	global->sprite.num = 0;
 }
 
-int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo argumento con ".cub" y el tercer argumento con "--save".
+int		ft_control_error(t_global *global, int argc, char **argv) // Tengo que comparar el segundo argumento con ".cub" y el tercer argumento con "--save".
 {
 	char *tmp;
 	int i;
@@ -179,8 +179,15 @@ int		ft_control_error(int argc, char **argv) // Tengo que comparar el segundo ar
 			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
 		/* "--save" control  */	
 		if (argc == 3)
+		{
 			if(ft_strncmp(argv[2], "--save\0", 7) != 0)
 				ft_print_error("Argumento inválido : Prueba escribiendo \"--save\".");
+			else
+			{
+				raycasting(global);
+				ft_screenshot(global);
+			}
+		}
 	}
 	return(0);
 }

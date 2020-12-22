@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 13:42:15 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:38:30 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef	struct		s_mapa // Parseo del mapa.
 	
 	char	*tmp1;
 	char	*tmp2;
+
+	int		bmp;
 
 }					t_mapa;
 /*---------------------------------------------------*/
@@ -247,7 +249,7 @@ int		key_move(int keycode, t_global *global); // Funcion para el movimiento del 
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
 void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
 void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
-int		ft_control_error(int argc, char **argv); // Gestiona los errores de argumentos.
+int		ft_control_error(t_global *global, int argc, char **argv); // Gestiona los errores de argumentos.
 void	ft_print_error(char *s); // Muestra por pantalla los errores al ejecutar.
 int		ft_parseo(t_global *global, char **argv); // Verifica que el .cub exista y lo pasa al GNL.
 int		ft_check_lines(t_global *global, char *line); // Verifica las lineas.
@@ -278,6 +280,10 @@ void		ft_res_sprites(t_global *global);
 void		ft_sort_sprites(t_global *global);
 void		ft_ray_sprite(t_global *global);
 
-void		ft_screenshot(t_global *global);
 int			raycasting(t_global *global);
+
+int			ft_screenshot(t_global *global);
+void		ft_bit_rgb(unsigned char *s, int i);
+void		ft_bmp_cabezera(t_global *global, int fd, int ps);
+void		ft_free_matriz(t_global *global, char **matriz);
 #endif
