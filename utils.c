@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:42:28 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:57:09 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,4 +269,11 @@ int		ft_is_space(char *str) // Salta los espacios
 	while (str[i] == ' ')
 		i++;
 	return(i);
+}
+
+int		ft_exit(t_global *global)
+{
+	mlx_destroy_window(global->data.mlx, global->data.win);
+	exit(0);
+	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:49:09 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:57:37 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int main (int argc, char **argv)
 	ft_control_error(&global, argc, argv);
 	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global); // Hook para las teclas
 	mlx_hook(global.data.win, 03, (0L<<0), key_move, &global); // Hook para las teclas
+	mlx_hook(global.data.win, 17, (17L<<0), ft_exit, &global); // Hook para las teclas
 	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
-	mlx_loop(global.data.mlx); // Loop general	
+	mlx_loop(global.data.mlx); // Loop general
 }

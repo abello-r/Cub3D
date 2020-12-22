@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:38:30 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:57:36 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,4 +286,5 @@ int			ft_screenshot(t_global *global);
 void		ft_bit_rgb(unsigned char *s, int i);
 void		ft_bmp_cabezera(t_global *global, int fd, int ps);
 void		ft_free_matriz(t_global *global, char **matriz);
+int			ft_exit(t_global *global);
 #endif
