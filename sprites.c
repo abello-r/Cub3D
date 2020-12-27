@@ -6,26 +6,26 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:17:29 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 18:40:21 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 17:47:41 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void		ft_res_sprites(t_global *global)
+void			ft_res_sprites(t_global *global)
 {
 	int		i;
-	
+
 	i = 0;
-	if(!(global->xysp = (t_xysp *)malloc(sizeof(t_xysp) * global->sprite.num)))
+	if (!(global->xysp = (t_xysp *)malloc(sizeof(t_xysp) * global->sprite.num)))
 		ft_print_error("No hay memoria");
-	if(!(global->sprite.z_buffer = (double *)malloc(sizeof(double) * (global->mapa.width + 1))))
+	if (!(global->sprite.z_buffer = (double *)malloc(sizeof(double) * (global->mapa.width + 1))))
 		ft_print_error("No hay memoria");
-	if(!(global->sprite.order = (int *)malloc(sizeof(int) * global->sprite.num + 1)))
+	if (!(global->sprite.order = (int *)malloc(sizeof(int) * global->sprite.num + 1)))
 		ft_print_error("No hay memoria");
 }
 
-void		ft_sort_sprites(t_global *global)
+void			ft_sort_sprites(t_global *global)
 {
 	int		i;
 	int		j;
@@ -57,7 +57,7 @@ void		ft_sort_sprites(t_global *global)
 	}
 }
 
-void		ft_ray_sprite(t_global *global)
+void			ft_ray_sprite(t_global *global)
 {
 	int		i;
 	int		y;

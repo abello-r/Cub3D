@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 13:25:04 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 17:20:20 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ int		ft_parseo(t_global *global, char **argv)
 		x++;
 	}
 	ft_check_lines(global, line);
-	ft_no_repeat(global); // ojito
+	ft_no_repeat(global);
 	close(fd);
 	free(line);
 	line = NULL;
@@ -276,7 +276,7 @@ int		ft_check_lines(t_global *global, char *line)
 	{
 		if (line[i] == '\0')
 			ft_print_error("Mapa separado por saltos de línea");
-		else if (ft_isascii(line[i]))
+		if (ft_isascii(line[i]))
 			ft_print_error("Hay un carácter inválido despúes del mapa");
 	}
 	return (0);  // Hacer un flag por cada argumento 1 si es correcto 2 si hay mas de uno y 0 si no hay

@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/23 19:30:15 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 16:21:56 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ int			raycasting(t_global *global);
 int			ft_screenshot(t_global *global);
 void		ft_bit_rgb(unsigned char *s, int i);
 void		ft_bmp_cabezera(t_global *global, int fd, int ps);
-void		ft_free_matriz(t_global *global, char **matriz);
+void		ft_free_matriz(t_global *global);
 int			ft_exit(t_global *global);
 void		ft_no_repeat(t_global *global);
 #endif

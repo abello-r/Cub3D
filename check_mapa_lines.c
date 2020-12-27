@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 12:20:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 14:08:33 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 16:33:44 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		ft_flood_fill(t_global *global, int x, int y)
 	}
 }
 
-char		**ft_cpy_memory(t_global *global, char **mem) // Ojito
+char		**ft_cpy_memory(t_global *global, char **mem)
 {
 	char	**copy;
 	int		i;
