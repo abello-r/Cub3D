@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:57:36 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/23 19:30:15 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef	struct		s_mapa // Parseo del mapa.
 	char	*tmp2;
 
 	int		bmp;
-
+	char	**copy_mem;
 }					t_mapa;
 /*---------------------------------------------------*/
 
@@ -89,6 +89,8 @@ typedef	struct		s_textura_norte // Texturas NORTE
 	int 	line_lenght; 
 	int 	endian;
 	void	*tex_norte;
+	int		tex_width;
+	int		tex_height;
 }				t_textura_norte;
 
 typedef	struct		s_textura_sur // Texturas SUR
@@ -97,6 +99,8 @@ typedef	struct		s_textura_sur // Texturas SUR
 	int 			line_lenght; 
 	int 			endian;
 	void			*tex_sur;
+	int				tex_width;
+	int				tex_height;
 }				t_textura_sur;
 
 typedef	struct		s_textura_este // Textura ESTE
@@ -105,6 +109,8 @@ typedef	struct		s_textura_este // Textura ESTE
 	int 	line_lenght; 
 	int 	endian;
 	void	*tex_este;
+	int		tex_width;
+	int		tex_height;
 }				t_textura_este;
 
 typedef	struct		s_textura_oeste // Texturas OESTE
@@ -113,6 +119,8 @@ typedef	struct		s_textura_oeste // Texturas OESTE
 	int 	line_lenght; 
 	int 	endian;
 	void	*tex_oeste;
+	int		tex_width;
+	int		tex_height;
 }				t_textura_oeste;
 
 typedef struct		s_sprite // Sprites.
@@ -227,6 +235,20 @@ typedef struct		s_player // Datos de Jugador
 
 }				t_player;
 
+typedef struct		s_arg
+{
+	int			r;
+	int			n;
+	int			so;
+	int			w;
+	int			e;
+	int			s;
+	int			f;
+	int			c;
+	int			map;
+
+}					t_arg;
+
 /*----------------------------------------------------*/
 
 typedef	struct		s_global // Conjunto de estructuras.
@@ -240,6 +262,7 @@ typedef	struct		s_global // Conjunto de estructuras.
 	t_mapa			mapa; // Parseo del mapa.
 	t_sprite		sprite; // Datos de los Sprites.
 	t_xysp			*xysp; // Distancia y posicion de los Sprites.
+	t_arg			arg;
 }				t_global;
 
 /*----------------------------------------------------*/
@@ -249,6 +272,7 @@ int		key_move(int keycode, t_global *global); // Funcion para el movimiento del 
 void	ft_get_texture(t_global *global); // Funcion que elige que imprimir 
 void	ft_fill_texture(t_global *global); // Funcion que recoge datos de las texturas
 void	ft_init_structs(t_global *global); // Funcion para inicializar variables.
+void	ft_init_structs2(t_global *global);
 int		ft_control_error(t_global *global, int argc, char **argv); // Gestiona los errores de argumentos.
 void	ft_print_error(char *s); // Muestra por pantalla los errores al ejecutar.
 int		ft_parseo(t_global *global, char **argv); // Verifica que el .cub exista y lo pasa al GNL.
@@ -287,4 +311,5 @@ void		ft_bit_rgb(unsigned char *s, int i);
 void		ft_bmp_cabezera(t_global *global, int fd, int ps);
 void		ft_free_matriz(t_global *global, char **matriz);
 int			ft_exit(t_global *global);
+void		ft_no_repeat(t_global *global);
 #endif

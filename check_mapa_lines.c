@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 12:20:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:34:42 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 14:08:33 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void		ft_reservar_map(t_global *global)
 
 	i = 0;
 	j = 0;
+	global->mapa.old == 0 ? ft_print_error("No existe el mapa") : 0;
+	global->mapa.xpvu == 0 ? ft_print_error("No existe el mapa") : 0;
 	if (!(global->mapa.memoria = malloc(sizeof(char*) * global->mapa.xpvu)))
 		ft_print_error("No hay espacio para guardar el mapa");
 	while (i < global->mapa.xpvu)
@@ -67,7 +69,7 @@ void		ft_flood_fill(t_global *global, int x, int y)
 	}
 }
 
-char		**ft_cpy_memory(t_global *global, char **mem)
+char		**ft_cpy_memory(t_global *global, char **mem) // Ojito
 {
 	char	**copy;
 	int		i;

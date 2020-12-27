@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 10:13:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:39:03 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 14:08:04 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		ft_nswe_complemento(t_global *global)
 
 void		ft_check_memoria(t_global *global) // Primera leída 
 {
-	char	**copy_mem;
 	int		i;
 	int		j;
 
@@ -65,13 +64,11 @@ void		ft_check_memoria(t_global *global) // Primera leída
 	global->sprite.tmp_num = global->sprite.num;
 	if (global->player.posX == 0 || global->player.posY == 0)
 		ft_print_error("No hay jugador");
-	copy_mem = ft_cpy_memory(global, global->mapa.memoria);
+	global->mapa.copy_mem = ft_cpy_memory(global, global->mapa.memoria);
 	ft_res_sprites(global);
 	ft_flood_fill(global, (int)global->player.posX, (int)global->player.posY);
-	global->mapa.memoria = ft_cpy_memory(global, copy_mem);
-	ft_free_matriz(global, copy_mem);
+	global->mapa.memoria = ft_cpy_memory(global, global->mapa.copy_mem);
 	ft_nswe(global);
-	
 }
 
 void		ft_fill_map(t_global *global, char **argv)
@@ -111,17 +108,4 @@ void		ft_fill_map(t_global *global, char **argv)
 	line = NULL;
 	close(fd);
 	ft_check_memoria(global);
-}
-
-void		ft_free_matriz(t_global *global, char **matriz)
-{
-	int i;
-
-	i = 0;
-	while (i < global->mapa.xpvu)
-	{
-		free(matriz[i]);
-		i++;
-	}
-	free(matriz);
 }

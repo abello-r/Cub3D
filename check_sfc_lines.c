@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:11:26 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/17 13:04:46 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 13:49:07 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int			ft_check_ruta_sprite(t_global *global, char *line)
 	global->mapa.ruta_sprite = ft_strtrim(tmp, " ");
 	free(tmp);
 	tmp = NULL;
+	global->arg.s++;
 	return (0);
 }
 
@@ -47,6 +48,8 @@ void		ft_check_color_f(t_global *global, char *line)
 	if (ft_strncmp((tmp + x), "F ", 2) == 0)
 		x = x + 2;
 	color = ft_split(&tmp[x], ',');
+	if (color[0] == '\0' || color[1] == '\0' || color[2] == '\0')
+		ft_print_error("Falta un número en el suelo");
 	c = ft_rgb(ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2]));
 	while (tmp[x] != '\0')
 	{
@@ -59,6 +62,7 @@ void		ft_check_color_f(t_global *global, char *line)
 	ft_free_var(color, tmp);
 	free(color);
 	global->mapa.color_f = c;
+	global->arg.f++;
 }
 
 void		ft_check_color_c(t_global *global, char *line)
@@ -75,6 +79,8 @@ void		ft_check_color_c(t_global *global, char *line)
 	if (ft_strncmp((tmp + x), "C ", 2) == 0)
 		x = x + 2;
 	color = ft_split(&tmp[x], ',');
+	if (color[0] == '\0' || color[1] == '\0' || color[2] == '\0')
+		ft_print_error("Falta un número en el cielo");
 	c = ft_rgb(ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2]));
 	while (tmp[x] != '\0')
 	{
@@ -87,6 +93,7 @@ void		ft_check_color_c(t_global *global, char *line)
 	ft_free_var(color, tmp);
 	free(color);
 	global->mapa.color_c = c;
+	global->arg.c++;
 }
 
 int			ft_rgb(int r, int g, int b)

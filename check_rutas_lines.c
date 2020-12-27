@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:26 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/21 17:33:30 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/23 15:29:11 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_check_resolucion(t_global *global, int x)
 		x++;
 	if (global->mapa.tmp1[x] != '\0')
 		ft_print_error("Hay un carácter inválido en la resolución.");
+	global->arg.r++;
 	return (0);
 }
 
@@ -58,6 +59,7 @@ int		ft_check_ruta_norte(t_global *global, char *line)
 	tmp = ft_strdup(line + x);
 	global->mapa.ruta_norte = ft_strtrim(tmp, " ");
 	free(tmp);
+	global->arg.n++;
 	return (0);
 }
 
@@ -79,6 +81,7 @@ int		ft_check_ruta_sur(t_global *global, char *line)
 	global->mapa.ruta_sur = ft_strtrim(tmp, " ");
 	free(tmp);
 	tmp = NULL;
+	global->arg.so++;
 	return (0);
 }
 
@@ -100,6 +103,7 @@ int		ft_check_ruta_este(t_global *global, char *line)
 	global->mapa.ruta_este = ft_strtrim(tmp, " ");
 	free(tmp);
 	tmp = NULL;
+	global->arg.e++;
 	return (0);
 }
 
@@ -121,5 +125,6 @@ int		ft_check_ruta_oeste(t_global *global, char *line)
 	global->mapa.ruta_oeste = ft_strtrim(tmp, " ");
 	free(tmp);
 	tmp = NULL;
+	global->arg.w++;
 	return (0);
 }

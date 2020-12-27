@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:57:37 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 13:24:23 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int main (int argc, char **argv)
 {
 	t_global global;
 	ft_init_structs(&global); // Inicializar valores
+	ft_init_structs2(&global);
 	ft_parseo(&global, argv);
 	
 	global.data.mlx		= mlx_init();
@@ -148,9 +149,9 @@ int main (int argc, char **argv)
 
 	ft_fill_texture(&global); // Obtener texturas
 	ft_control_error(&global, argc, argv);
-	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global); // Hook para las teclas
-	mlx_hook(global.data.win, 03, (0L<<0), key_move, &global); // Hook para las teclas
-	mlx_hook(global.data.win, 17, (17L<<0), ft_exit, &global); // Hook para las teclas
-	mlx_loop_hook(global.data.mlx, raycasting, &global); // Loop del raycasting
-	mlx_loop(global.data.mlx); // Loop general
+	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global);
+	mlx_hook(global.data.win, 03, (0L<<0), key_move, &global);
+	mlx_hook(global.data.win, 17, (17L<<0), ft_exit, &global);
+	mlx_loop_hook(global.data.mlx, raycasting, &global);
+	mlx_loop(global.data.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 19:57:09 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/27 13:25:04 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,53 +102,57 @@ void		ft_get_texture(t_global *global)
 		/*	Guardar el valor obtenido de la funcion ft_fill_texture en el buffer para luego ser pintado	*/
 		if (global->player.side == 0 && global->player.stepX == -1) // NORTE 
 		{
+			global->player.tex_width = global->textura_norte.tex_width;
+			global->player.tex_height = global->textura_norte.tex_height;
 			global->player.textura = global->textura_norte.tex_norte;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_norte.bits_per_pixel, &global->textura_norte.line_lenght, &global->textura_norte.endian);
 		}
 		if (global->player.side == 0 && global->player.stepX == 1) // SUR
 		{
+			global->player.tex_width = global->textura_sur.tex_width;
+			global->player.tex_height = global->textura_sur.tex_height;
 			global->player.textura = global->textura_sur.tex_sur;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_sur.bits_per_pixel, &global->textura_sur.line_lenght, &global->textura_sur.endian);
 		}
 		if (global->player.side == 1 && global->player.stepY == 1) // ESTE
 		{
+			global->player.tex_width = global->textura_este.tex_width;
+			global->player.tex_height = global->textura_este.tex_height;
 			global->player.textura = global->textura_este.tex_este;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_este.bits_per_pixel, &global->textura_este.line_lenght, &global->textura_este.endian);
 		}
 		if (global->player.side == 1 && global->player.stepY == -1) // OESTE
 		{
+			global->player.tex_width = global->textura_oeste.tex_width;
+			global->player.tex_height = global->textura_oeste.tex_height;
 			global->player.textura = global->textura_oeste.tex_oeste;
 			global->player.buffer = (unsigned int *)mlx_get_data_addr(global->player.textura, &global->textura_oeste.bits_per_pixel, &global->textura_oeste.line_lenght, &global->textura_oeste.endian);
 		}
-		global->sprite.buffer = (unsigned int *)mlx_get_data_addr(global->sprite.tex_add, &global->sprite.bits_per_pixel, &global->sprite.line_lenght, &global->sprite.endian);
+	global->sprite.buffer = (unsigned int *)mlx_get_data_addr(global->sprite.tex_add, &global->sprite.bits_per_pixel, &global->sprite.line_lenght, &global->sprite.endian);
 }
 
 void		ft_fill_texture(t_global *global)
 {
-	/* Asignar valor de textura a una variable "tex.norte/sur/este/oeste" */
-	if(!(global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_norte, &global->player.tex_width, &global->player.tex_height)))
+	if (!(global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_norte, &global->textura_norte.tex_width, &global->textura_norte.tex_height)))
 		ft_print_error("La textura NORTE que has introducido no existe.");
-	else if(!(global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_sur, &global->player.tex_width, &global->player.tex_height)))
+	else if (!(global->textura_sur.tex_sur = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_sur, &global->textura_sur.tex_width, &global->textura_sur.tex_height)))
 		ft_print_error("La textura SUR que has introducido no existe.");
-	else if(!(global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_este, &global->player.tex_width, &global->player.tex_height)))
+	else if (!(global->textura_oeste.tex_oeste = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_este, &global->textura_oeste.tex_width, &global->textura_oeste.tex_height)))
 		ft_print_error("La textura OESTE que has introducido no existe.");
-	else if(!(global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_oeste, &global->player.tex_width, &global->player.tex_height)))
+	else if (!(global->textura_este.tex_este = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_oeste, &global->textura_este.tex_width, &global->textura_este.tex_height)))
 		ft_print_error("La textura ESTE que has introducido no existe.");
-	if(!(global->sprite.tex_add = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_sprite, &global->sprite.tex_width, &global->sprite.tex_height)))
+	if (!(global->sprite.tex_add = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_sprite, &global->sprite.tex_width, &global->sprite.tex_height)))
 		ft_print_error("La textura del SPRITE no existe");
 }
 
 void		ft_init_structs(t_global *global)
 {
-	/*	Inicializar valores de variables en la estructura	*/
-	//global->player.posX =	4 - 0.5; /* Posicion inicial en x */
-	//global->player.posY =	4 + 0.5; /* Posicion inicial en y */
-	global->player.dirX =	-1;
-	global->player.dirY =	0;
-	global->player.planeX =	0;
-	global->player.planeY =	0.66;
-	global->player.moveSpeed = 0.21; /* Movimiento del jugador */
-	global->player.rotSpeed = 0.14; /* Movimiento de la camara */
+	global->player.dirX = -1;
+	global->player.dirY = 0;
+	global->player.planeX = 0;
+	global->player.planeY = 0.66;
+	global->player.moveSpeed = 0.27;
+	global->player.rotSpeed = 0.14;
 	global->mapa.ruta_norte = NULL;
 	global->mapa.ruta_sur = NULL;
 	global->mapa.ruta_este = NULL;
@@ -160,27 +164,36 @@ void		ft_init_structs(t_global *global)
 	global->sprite.num = 0;
 }
 
-int		ft_control_error(t_global *global, int argc, char **argv) // Tengo que comparar el segundo argumento con ".cub" y el tercer argumento con "--save".
+void		ft_init_structs2(t_global *global)
 {
-	char *tmp;
-	int i;
+	global->arg.r =		0;
+	global->arg.n =		0;
+	global->arg.so =	0;
+	global->arg.w =		0;
+	global->arg.e =		0;
+	global->arg.s =		0;
+	global->arg.f =		0;
+	global->arg.c =		0;
+	global->arg.map =	0;
+}
 
+int		ft_control_error(t_global *global, int argc, char **argv)
+{
+	char	*tmp;
+	int		i;
 
 	i = 0;
-	/* Numero de argumento control */
 	if (argc < 2 || argc > 3)
 		ft_print_error("Número de argumentos inválido.");
-	/* ".cub" control */
 	else if (argc == 2 || argc == 3)
 	{
-		if((tmp = ft_strchr(argv[1], '.')) == NULL)
+		if ((tmp = ft_strchr(argv[1], '.')) == NULL)
 			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
-		if((ft_strncmp(tmp, ".cub\0", 5)) != 0)
+		if ((ft_strncmp(tmp, ".cub\0", 5)) != 0)
 			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
-		/* "--save" control  */	
 		if (argc == 3)
 		{
-			if(ft_strncmp(argv[2], "--save\0", 7) != 0)
+			if (ft_strncmp(argv[2], "--save\0", 7) != 0)
 				ft_print_error("Argumento inválido : Prueba escribiendo \"--save\".");
 			else
 			{
@@ -189,10 +202,10 @@ int		ft_control_error(t_global *global, int argc, char **argv) // Tengo que comp
 			}
 		}
 	}
-	return(0);
+	return (0);
 }
 
-void		ft_print_error(char *s) // Muestra por pantalla un error, con salto de linea y ejecuta un exit.
+void		ft_print_error(char *s)
 {
 	ft_putstr_fd("Error\n", 1);
 	ft_putstr_fd(s, 1);
@@ -200,7 +213,7 @@ void		ft_print_error(char *s) // Muestra por pantalla un error, con salto de lin
 	exit(0);
 }
 
-int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y lo pasa al GNL
+int		ft_parseo(t_global *global, char **argv)
 {
 	char	*line;
 	int		fd;
@@ -209,10 +222,9 @@ int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y l
 	x = 0;
 	line = NULL;
 	global->mapa.i = 0;
-
-	if((fd = open(argv[1], O_RDONLY)) == -1)
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		ft_print_error("El archivo \".cub\" que intentas abrir no existe.");
-	while((global->mapa.i = get_next_line(fd, &line)) > 0)
+	while ((global->mapa.i = get_next_line(fd, &line)) > 0)
 	{
 		ft_check_lines(global, line);
 		free(line);
@@ -220,28 +232,30 @@ int		ft_parseo(t_global *global, char **argv) // Verifica que el .cub exista y l
 		x++;
 	}
 	ft_check_lines(global, line);
+	ft_no_repeat(global); // ojito
 	close(fd);
 	free(line);
 	line = NULL;
 	ft_reservar_map(global);
 	ft_fill_map(global, argv);
-	return(0);
+	return (0);
 }
 
-int		ft_check_lines(t_global *global, char *line) // Checkea las lineas
+int		ft_check_lines(t_global *global, char *line)
 {
-	int i = 0;
-	int x = 0;
+	int i;
+	int x;
 
-	while (line[i] == ' ' || line[i] == '\n')
+	x = 1;
+	i = 0;
+	while (line[i] == ' ')
 		i++;
-	if(line[i] == 'R') // RESOLUCION LISTA
+	if (line[i] == 'R')
 	{
 		global->mapa.tmp1 = line;
-		x++;
 		ft_check_resolucion(global, x);
 	}
-	else if (line[i] == 'N' && line[i + 1] == 'O') // RUTA A TEXTURAS LISTA
+	else if (line[i] == 'N' && line[i + 1] == 'O')
 		ft_check_ruta_norte(global, line);
 	else if (line[i] == 'S' && line[i + 1] == 'O')
 		ft_check_ruta_sur(global, line);
@@ -255,25 +269,52 @@ int		ft_check_lines(t_global *global, char *line) // Checkea las lineas
 		ft_check_color_f(global, line);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		ft_check_color_c(global, line);
-	else if (line[i] == ' ' || line[i] == '0' 
+	else if (line[i] == ' ' || line[i] == '0'
 		|| line[i] == '1' || line[i] == '2')
 		ft_check_map(global, line);
-	return(0);
+	else if (global->mapa.xpvu > 0 || global->mapa.old > 0)
+	{
+		if (line[i] == '\0')
+			ft_print_error("Mapa separado por saltos de línea");
+		else if (ft_isascii(line[i]))
+			ft_print_error("Hay un carácter inválido despúes del mapa");
+	}
+	return (0);  // Hacer un flag por cada argumento 1 si es correcto 2 si hay mas de uno y 0 si no hay
 }
 
-int		ft_is_space(char *str) // Salta los espacios 
+int			ft_is_space(char *str)
 {
 	int i;
 
 	i = 0;
 	while (str[i] == ' ')
 		i++;
-	return(i);
+	return (i);
 }
 
 int		ft_exit(t_global *global)
 {
 	mlx_destroy_window(global->data.mlx, global->data.win);
 	exit(0);
-	return(0);
+	return (0);
+}
+
+void		ft_no_repeat(t_global *global)
+{
+	if (global->arg.r == 0 || global->arg.r == 2)
+		ft_print_error("No hay resolución ó está duplicada");
+	if (global->arg.n == 2)
+		ft_print_error("La textura NORTE está duplicada");
+	if (global->arg.so == 2)
+		ft_print_error("La textura SUR está duplicada");
+	if (global->arg.w == 2)
+		ft_print_error("La textura OESTE está duplicada");
+	if (global->arg.e == 2)
+		ft_print_error("La textura ESTE está duplicada");
+	if (global->arg.s == 2)
+		ft_print_error("La ruta al SPRITE está duplicada");
+	if (global->arg.c == 0 || global->arg.c == 2)
+		ft_print_error("No hay color del cielo ó está duplicado");
+	if (global->arg.f == 0 || global->arg.f == 2)
+		ft_print_error("No hay color del suelo ó está duplicado");
 }
