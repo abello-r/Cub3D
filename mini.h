@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 16:21:56 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:30:56 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,8 @@ int		ft_rgb (int r, int g, int b);
 void	ft_check_map(t_global *global, char *line);
 void	ft_reservar_map(t_global *global);
 void	ft_fill_map(t_global *global, char **argv);
-void	ft_check_memoria (t_global *global);
+void	ft_check_memoria(t_global *global);
+void	ft_check_memoria2(t_global *global);
 void	ft_flood_fill(t_global *global, int x, int y);
 char	**ft_cpy_memory(t_global *global, char **mem);
 void	ft_nswe(t_global *global);
@@ -302,7 +303,11 @@ void	ft_free_var(char **color, char *tmp);
 
 void		ft_res_sprites(t_global *global);
 void		ft_sort_sprites(t_global *global);
+void		ft_sort_sprites2(t_global *global);
 void		ft_ray_sprite(t_global *global);
+void		ft_ray_sprite2(t_global *global, int i);
+void		ft_ray_sprite3(t_global *global);
+void		ft_ray_sprite4(t_global *global, int d, int y);
 
 int			raycasting(t_global *global);
 

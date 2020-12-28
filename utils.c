@@ -6,15 +6,13 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 17:20:20 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/28 18:13:09 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-/*---------------------------------------------------- Insertar pixel más rapido que la original */
-
-void	my_mlx_pixel_put(t_global *global, int x, int y, int color)
+void			my_mlx_pixel_put(t_global *global, int x, int y, int color)
 {
 	char *dst;
 
@@ -23,7 +21,7 @@ void	my_mlx_pixel_put(t_global *global, int x, int y, int color)
 }
 /*---------------------------------------------------- Movimiento dentro del cub3d */
 
-int		key_move(int keycode, t_global *global)
+int				key_move(int keycode, t_global *global)
 {
 	if (keycode == ESCAPE) // Escape REVISADA
 	{
@@ -35,46 +33,30 @@ int		key_move(int keycode, t_global *global)
 	if (keycode == KEY_UP) // Mover Arriba REVISADA
 	{
 		if (global->mapa.memoria[(int)(global->player.posX + global->player.dirX * global->player.moveSpeed)][((int)global->player.posY)] == '0')
-		{
 			global->player.posX += global->player.dirX * global->player.moveSpeed;
-		}
 		if (global->mapa.memoria[(int)global->player.posX][(int)(global->player.posY + global->player.dirY * global->player.moveSpeed)] == '0')
-		{
 			global->player.posY += global->player.dirY * global->player.moveSpeed;
-		}
 	}
 	if (keycode == KEY_DOWN) // Mover Abajo REVISADA
 	{
 		if (global->mapa.memoria[(int)(global->player.posX - global->player.dirX * global->player.moveSpeed)][(int)global->player.posY] == '0')
-		{
 			global->player.posX -= global->player.dirX * global->player.moveSpeed;
-		} 
 		if (global->mapa.memoria[(int)global->player.posX][(int)(global->player.posY - global->player.dirY * global->player.moveSpeed)] == '0')
-		{
 			global->player.posY -= global->player.dirY * global->player.moveSpeed;
-		}
 	}
 	if (keycode == KEY_RIGHT) // Mover derecha REVISADA
 	{
 		if (global->mapa.memoria[(int)(global->player.posX)][((int)(global->player.posY - global->player.dirX * global->player.moveSpeed))] == '0')
-		{
 			global->player.posY -= global->player.dirX * global->player.moveSpeed;
-		}
 		if (global->mapa.memoria[(int)(global->player.posX + global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)] == '0')
-		{
 			global->player.posX += global->player.dirY * global->player.moveSpeed;
-		}
 	}
 	if (keycode == KEY_LEFT) // Mover Izquierda REVISADA
 	{
 		if (global->mapa.memoria[(int)(global->player.posX)][((int)(global->player.posY + global->player.dirX * global->player.moveSpeed))] == '0')
-		{
 			global->player.posY += global->player.dirX * global->player.moveSpeed;
-		}
 		if (global->mapa.memoria[(int)(global->player.posX - global->player.dirY * global->player.moveSpeed)][(int)(global->player.posY)] == '0')
-		{
 			global->player.posX -= global->player.dirY * global->player.moveSpeed;
-		}
 	}
 	if (keycode == KEY_RIGHT_VISION) // Rotar a la Derecha REVISADA
 	{
@@ -97,7 +79,7 @@ int		key_move(int keycode, t_global *global)
 	return (0);
 }
 
-void		ft_get_texture(t_global *global)
+void			ft_get_texture(t_global *global)
 {
 		/*	Guardar el valor obtenido de la funcion ft_fill_texture en el buffer para luego ser pintado	*/
 		if (global->player.side == 0 && global->player.stepX == -1) // NORTE 
@@ -131,7 +113,7 @@ void		ft_get_texture(t_global *global)
 	global->sprite.buffer = (unsigned int *)mlx_get_data_addr(global->sprite.tex_add, &global->sprite.bits_per_pixel, &global->sprite.line_lenght, &global->sprite.endian);
 }
 
-void		ft_fill_texture(t_global *global)
+void			ft_fill_texture(t_global *global)
 {
 	if (!(global->textura_norte.tex_norte = mlx_xpm_file_to_image(global->data.mlx, global->mapa.ruta_norte, &global->textura_norte.tex_width, &global->textura_norte.tex_height)))
 		ft_print_error("La textura NORTE que has introducido no existe.");
@@ -145,7 +127,7 @@ void		ft_fill_texture(t_global *global)
 		ft_print_error("La textura del SPRITE no existe");
 }
 
-void		ft_init_structs(t_global *global)
+void			ft_init_structs(t_global *global)
 {
 	global->player.dirX = -1;
 	global->player.dirY = 0;
@@ -164,28 +146,25 @@ void		ft_init_structs(t_global *global)
 	global->sprite.num = 0;
 }
 
-void		ft_init_structs2(t_global *global)
+void			ft_init_structs2(t_global *global)
 {
-	global->arg.r =		0;
-	global->arg.n =		0;
-	global->arg.so =	0;
-	global->arg.w =		0;
-	global->arg.e =		0;
-	global->arg.s =		0;
-	global->arg.f =		0;
-	global->arg.c =		0;
-	global->arg.map =	0;
+	global->arg.r = 0;
+	global->arg.n = 0;
+	global->arg.so = 0;
+	global->arg.w = 0;
+	global->arg.e = 0;
+	global->arg.s = 0;
+	global->arg.f = 0;
+	global->arg.c = 0;
+	global->arg.map = 0;
 }
 
-int		ft_control_error(t_global *global, int argc, char **argv)
+int				ft_control_error(t_global *global, int argc, char **argv)
 {
 	char	*tmp;
-	int		i;
 
-	i = 0;
-	if (argc < 2 || argc > 3)
-		ft_print_error("Número de argumentos inválido.");
-	else if (argc == 2 || argc == 3)
+	argc < 2 || argc > 3 ? ft_print_error("Número de argumentos inválido.") : 0;
+	if (argc == 2 || argc == 3)
 	{
 		if ((tmp = ft_strchr(argv[1], '.')) == NULL)
 			ft_print_error("Argumento inválido : Revisa que el archivo termine en \".cub\".");
@@ -205,7 +184,7 @@ int		ft_control_error(t_global *global, int argc, char **argv)
 	return (0);
 }
 
-void		ft_print_error(char *s)
+void			ft_print_error(char *s)
 {
 	ft_putstr_fd("Error\n", 1);
 	ft_putstr_fd(s, 1);
@@ -213,7 +192,7 @@ void		ft_print_error(char *s)
 	exit(0);
 }
 
-int		ft_parseo(t_global *global, char **argv)
+int				ft_parseo(t_global *global, char **argv)
 {
 	char	*line;
 	int		fd;
@@ -241,7 +220,7 @@ int		ft_parseo(t_global *global, char **argv)
 	return (0);
 }
 
-int		ft_check_lines(t_global *global, char *line)
+int				ft_check_lines(t_global *global, char *line)
 {
 	int i;
 	int x;
@@ -279,10 +258,10 @@ int		ft_check_lines(t_global *global, char *line)
 		if (ft_isascii(line[i]))
 			ft_print_error("Hay un carácter inválido despúes del mapa");
 	}
-	return (0);  // Hacer un flag por cada argumento 1 si es correcto 2 si hay mas de uno y 0 si no hay
+	return (0);
 }
 
-int			ft_is_space(char *str)
+int				ft_is_space(char *str)
 {
 	int i;
 
@@ -292,14 +271,14 @@ int			ft_is_space(char *str)
 	return (i);
 }
 
-int		ft_exit(t_global *global)
+int				ft_exit(t_global *global)
 {
 	mlx_destroy_window(global->data.mlx, global->data.win);
 	exit(0);
 	return (0);
 }
 
-void		ft_no_repeat(t_global *global)
+void			ft_no_repeat(t_global *global)
 {
 	if (global->arg.r == 0 || global->arg.r == 2)
 		ft_print_error("No hay resolución ó está duplicada");

@@ -6,18 +6,17 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:26 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/23 15:29:11 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:54:31 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
 int		ft_check_resolucion(t_global *global, int x)
-{ /*CAMBIAR LA VARIABLE WIDHT Y HEIIGHT POR UNA MAS PEQUEÑA PARA LA NORMINETTE CABRON */
+{
 	while (ft_is_space(&global->mapa.tmp1[x]))
 		x++;
-	if (global->mapa.tmp1[x] == 'R')
-		x++;
+	x += global->mapa.tmp1[x] == 'R';
 	while (ft_is_space(&global->mapa.tmp1[x]))
 		x++;
 	if (!ft_isdigit(global->mapa.tmp1[x]))
@@ -32,14 +31,14 @@ int		ft_check_resolucion(t_global *global, int x)
 		x++;
 	if (global->mapa.width < 1 || global->mapa.height < 1)
 		ft_print_error("La resolucíon miníma es \"1x1\", prueba a cambiarla.");
-	global->mapa.width = (global->mapa.width > 2560) ? 2560 : global->mapa.width;
-	global->mapa.height = (global->mapa.height > 1440) ? 1440 : global->mapa.height;
+	global->mapa.width = global->mapa.width > 2560 ? 2560 : global->mapa.width;
+	global->mapa.height = global->mapa.height > 1440 ?
+							1440 : global->mapa.height;
 	while (ft_is_space(&global->mapa.tmp1[x]))
 		x++;
 	if (global->mapa.tmp1[x] != '\0')
 		ft_print_error("Hay un carácter inválido en la resolución.");
-	global->arg.r++;
-	return (0);
+	return (!++global->arg.r);
 }
 
 int		ft_check_ruta_norte(t_global *global, char *line)

@@ -3,10 +3,10 @@ NO srcs/lavaboy.xpm
 SO srcs/bloque.xpm
 WE srcs/puerta.xpm
 EA srcs/flor.xpm
-
 S srcs/barril.xpm
 C 42,42,42
 F 1,23,21
+
 
                             1111111111111
                             1000000000001
@@ -17,5 +17,5 @@ F 1,23,21
                             1000000002221
                             1000000000221
                             1000000000021
-                            10000000000N1
+                            10000000000W1
                             1111111111111

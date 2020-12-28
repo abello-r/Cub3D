@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 10:13:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 17:04:00 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:48:50 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,26 @@ void		ft_fill_map(t_global *global, char **argv)
 {
 	char	*line;
 	int		fd;
-	int		i;
 	int		j;
 	int		w;
 
 	fd = open(argv[1], O_RDONLY);
-	i = 0;
-	j = 0;
 	w = 0;
-	while ((i = get_next_line(fd, &line)) > 0)
+	while (get_next_line(fd, &line) > 0 && (j = -1))
 	{
-		j = 0;
-		while (line[j] == ' ')
-		{
+		while (line[++j] == ' ')
 			line[j] = '0';
-			j++;
-		}
 		if (line[j] == '0' || line[j] == '1' || line[j] == '2')
 			ft_strlcpy(global->mapa.memoria[w++], line, ft_strlen(line) + 1);
 		free(line);
 		line = NULL;
 	}
-	j = 0;
-	while (line[j] == ' ')
-	{
+	j = -1;
+	while (line[++j] == ' ')
 		line[j] = '0';
-		j++;
-	}
 	if (line[j] != '\0')
 		ft_strlcpy(global->mapa.memoria[w++], line, ft_strlen(line) + 1);
 	free(line);
-	line = NULL;
 	close(fd);
 	ft_check_memoria(global);
 }
@@ -74,15 +63,11 @@ void		ft_check_memoria(t_global *global)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	while (i < global->mapa.xpvu)
-	{
-		j = 0;
-		while (j < global->mapa.old)
+	i = -1;
+	while (++i < global->mapa.xpvu && (j = -1))
+		while (++j < global->mapa.old)
 		{
-			if (global->mapa.memoria[i][j] == '2')
-				global->sprite.num++;
+			global->mapa.memoria[i][j] == '2' ? global->sprite.num++ : 0;
 			if (!(ft_strchr(" 012NESW", global->mapa.memoria[i][j])))
 				ft_print_error("Carácter inválido en el mapa");
 			if (ft_strchr("NESW", global->mapa.memoria[i][j]))
@@ -96,15 +81,19 @@ void		ft_check_memoria(t_global *global)
 			}
 			if (global->mapa.memoria[i][j] == ' ')
 				global->mapa.memoria[i][j] = '0';
-			j++;
 		}
-		i++;
-	}
+	ft_check_memoria2(global);
+}
+
+void		ft_check_memoria2(t_global *global)
+{
+	int i;
+
 	if (global->player.posX == 0 || global->player.posY == 0)
 		ft_print_error("No hay jugador");
 	global->sprite.tmp_num = global->sprite.num;
 	global->mapa.copy_mem = ft_cpy_memory(global, global->mapa.memoria);
-	ft_res_sprites(global);	
+	ft_res_sprites(global);
 	ft_flood_fill(global, (int)global->player.posX, (int)global->player.posY);
 	i = 0;
 	while (i < global->mapa.xpvu)

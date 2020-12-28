@@ -1,6 +1,6 @@
 GNL= gnl/get_next_line_bonus.c
 NAME= mini.a
-SRC= $(GNL) cub3d.c utils.c check_rutas_lines.c check_sfc_lines.c check_mapa_lines.c check_mapa_lines2.c sprites.c screenshot.c
+SRC= $(GNL) cub3d.c utils.c check_rutas_lines.c check_sfc_lines.c check_mapa_lines.c check_mapa_lines2.c sprites.c sprites2.c screenshot.c
 SRC+= 
 OBJ1=$(SRC:.c=.o)
 OBJ=$(OBJ1:.m=.o)

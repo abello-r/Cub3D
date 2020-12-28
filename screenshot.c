@@ -6,21 +6,21 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 13:26:28 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/22 18:32:22 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:09:50 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void ft_bit_rgb(unsigned char *s, int i)
+void			ft_bit_rgb(unsigned char *s, int i)
 {
-	s[0] = (unsigned char) i;
-	s[1] = (unsigned char) (i >> 8);
-	s[2] = (unsigned char) (i >> 16);
-	s[3] = (unsigned char) (i >> 24);
+	s[0] = (unsigned char)i;
+	s[1] = (unsigned char)(i >> 8);
+	s[2] = (unsigned char)(i >> 16);
+	s[3] = (unsigned char)(i >> 24);
 }
 
-void	ft_bmp_cabezera(t_global *global, int fd, int ps)
+void			ft_bmp_cabezera(t_global *global, int fd, int ps)
 {
 	unsigned char	header[54];
 	int				filesize;
@@ -41,10 +41,10 @@ void	ft_bmp_cabezera(t_global *global, int fd, int ps)
 	write(fd, global->data.addr, global->mapa.width * global->mapa.height * 4);
 }
 
-int		ft_screenshot(t_global *global)
+int				ft_screenshot(t_global *global)
 {
-	int				fd;
-	int				padsize;
+	int	fd;
+	int	padsize;
 
 	padsize = (4 - (global->mapa.width * 3) % 4) % 4;
 	write(1, "\n\x1b[32m[Captura hecha con éxito]\n\n\x1b[0m", 39);
