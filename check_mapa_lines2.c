@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 10:13:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/28 15:48:50 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/29 17:05:50 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ void		ft_nswe_complemento(t_global *global)
 {
 	if (global->player.nswe == 'W')
 	{
-		global->player.dirX = 0.0;
-		global->player.dirY = -1;
-		global->player.planeX = -0.66;
-		global->player.planeY = 0.0;
+		global->player.dir_x = 0.0;
+		global->player.dir_y = -1;
+		global->player.plane_x = -0.66;
+		global->player.plane_y = 0.0;
 	}
 	else if (global->player.nswe == 'E')
 	{
-		global->player.dirX = 0.0;
-		global->player.dirY = 1;
-		global->player.planeX = 0.66;
-		global->player.planeY = 0.0;
+		global->player.dir_x = 0.0;
+		global->player.dir_y = 1;
+		global->player.plane_x = 0.66;
+		global->player.plane_y = 0.0;
 	}
 }
 
@@ -74,10 +74,10 @@ void		ft_check_memoria(t_global *global)
 			{
 				global->player.nswe = global->mapa.memoria[i][j];
 				global->mapa.memoria[i][j] = '0';
-				if (global->player.posX > 0 || global->player.posY < 0)
+				if (global->player.pos_x > 0 || global->player.pos_y < 0)
 					ft_print_error("Hay más de un jugador en el mapa");
-				global->player.posY = j + 0.5;
-				global->player.posX = i + 0.5;
+				global->player.pos_y = j + 0.5;
+				global->player.pos_x = i + 0.5;
 			}
 			if (global->mapa.memoria[i][j] == ' ')
 				global->mapa.memoria[i][j] = '0';
@@ -89,12 +89,12 @@ void		ft_check_memoria2(t_global *global)
 {
 	int i;
 
-	if (global->player.posX == 0 || global->player.posY == 0)
+	if (global->player.pos_x == 0 || global->player.pos_y == 0)
 		ft_print_error("No hay jugador");
 	global->sprite.tmp_num = global->sprite.num;
 	global->mapa.copy_mem = ft_cpy_memory(global, global->mapa.memoria);
 	ft_res_sprites(global);
-	ft_flood_fill(global, (int)global->player.posX, (int)global->player.posY);
+	ft_flood_fill(global, (int)global->player.pos_x, (int)global->player.pos_y);
 	i = 0;
 	while (i < global->mapa.xpvu)
 	{

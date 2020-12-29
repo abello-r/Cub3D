@@ -6,152 +6,122 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:22 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 13:24:23 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/29 20:26:45 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int			raycasting(t_global *global)
+int					raycasting(t_global *global)
 {
-	int	w = global->mapa.width;
-	int x = 0;
-	int y = 0;
+	int	w;
+	int x;
+	int y;
 
-	while(x < w) // revisar las variables aquí
+	w = global->mapa.width;
+	x = 0;
+	y = 0;
+	while (x < w)
 	{
-		global->player.cameraX = 2 * x / (double)w - 1;
-		global->player.rayDirX = global->player.dirX + global->player.planeX * global->player.cameraX;
-		global->player.rayDirY = global->player.dirY + global->player.planeY * global->player.cameraX;
-
-		global->player.mapX = (int)global->player.posX; // Posición en el mapa eje x.
-		global->player.mapY = (int)global->player.posY; // Posición en el mapa eje y.
-
-		global->player.deltaDistX = fabs(1 / global->player.rayDirX); // Longitud del rayo desde un lado x a otro lado x.
-		global->player.deltaDistY = fabs(1 / global->player.rayDirY); // Longitud del rayo desde un lado y a otro lado y.
-		global->player.hit = 0;
-
-		if (global->player.rayDirX < 0)
-		{
-			global->player.stepX = -1;
-			global->player.sideDistX = (global->player.posX - global->player.mapX) * global->player.deltaDistX;
-		}
-		else
-		{
-			global->player.stepX = 1;
-			global->player.sideDistX = (global->player.mapX + 1.0 - global->player.posX) * global->player.deltaDistX;
-		}
-		if (global->player.rayDirY < 0)
-		{
-			global->player.stepY = -1;
-			global->player.sideDistY = (global->player.posY - global->player.mapY) * global->player.deltaDistY;
-		}
-		else
-		{
-			global->player.stepY = 1;
-			global->player.sideDistY = (global->player.mapY + 1.0 - global->player.posY) * global->player.deltaDistY;
-		}
-		while (global->player.hit == 0)
-		{
-			if (global->player.sideDistX < global->player.sideDistY)
-			{
-				global->player.sideDistX += global->player.deltaDistX;
-				global->player.mapX += global->player.stepX;
-				global->player.side = 0;
-			}
-			else
-			{
-				global->player.sideDistY += global->player.deltaDistY;
-				global->player.mapY += global->player.stepY;
-				global->player.side = 1;
-			}
-			if (global->mapa.memoria[global->player.mapX][global->player.mapY] == '1') 
-				global->player.hit = 1;
-		}
-		if (global->player.side == 0)
-		{
-			global->player.perpWallDist = (global->player.mapX - global->player.posX + (1 - global->player.stepX) / 2) / global->player.rayDirX;
-		}
-		else
-		{
-			global->player.perpWallDist = (global->player.mapY - global->player.posY + (1 - global->player.stepY) / 2) / global->player.rayDirY;
-		}
-		global->player.line_height = (global->mapa.height / global->player.perpWallDist); // Calcula la altura de la linea a pintar.
-		global->player.drawStart = -global->player.line_height / 2 + global->mapa.height / 2;
-		global->player.drawStart = (global->player.drawStart < 0) ? 0 : global->player.drawStart;
-		global->player.drawEnd = global->player.line_height / 2 + global->mapa.height / 2;
-		global->player.drawEnd = (global->player.drawEnd >= global->mapa.height) ? global->mapa.height - 1 : global->player.drawEnd;
-	/*-------------------------------------------------------------------------------------------------------*/
-
-		global->player.texNum = (int)global->mapa.memoria[global->player.mapX][global->player.mapY]; // DESDE AQUI EMPIEZAN LAS TEXTURAS.
-
-		if (global->player.side == 0)
-		{
-			global->player.wallX = global->player.posY + global->player.perpWallDist * global->player.rayDirY;
-		}
-		else 
-		{
-			global->player.wallX = global->player.posX + global->player.perpWallDist * global->player.rayDirX;
-		}
-		global->player.wallX -= floor((global->player.wallX));
-		global->player.texX = (int)(global->player.wallX * (double)global->player.tex_width);
-		if (global->player.side == 0 && global->player.rayDirX > 0)
-		{
-			global->player.texX = global->player.tex_width - global->player.texX - 1;
-		}
-		if (global->player.side == 1 && global->player.rayDirY < 0)
-		{
-			global->player.texX = global->player.tex_width - global->player.texX - 1;
-		}
-		global->player.step = 1.0 * global->player.tex_height / global->player.line_height;
-		global->player.texPos = (global->player.drawStart - global->mapa.height / 2 + global->player.line_height / 2) * global->player.step;
-		y = 0;
-		while (y < global->player.drawStart) // Color del cielo.
-		{
-			my_mlx_pixel_put(global, x, y, global->mapa.color_c);
-			y++;
-		}
-		y = global->player.drawStart;
-		ft_get_texture(global); // Funcion que le asigna valor a buffer (paredes).
-		while (y++ < global->player.drawEnd)
-		{
-			global->player.texY = (int)global->player.texPos;
-			global->player.texPos += global->player.step;
-			global->data.color = global->player.buffer[global->player.tex_width * global->player.texY + global->player.texX]; 
-			my_mlx_pixel_put(global, x, y, global->data.color);
-		}
-		while (y < global->mapa.height) //Color del suelo.
-		{
-			my_mlx_pixel_put(global, x, y, global->mapa.color_f);
-			y++;
-		}
-		/* AQUI EMPIEZA EL CASTING DE LOS SPRITES */
-		global->sprite.z_buffer[x] = global->player.perpWallDist;
-		/* AQUI TERMINA EL CASTING DE LOS SPRITES */
+		raycasting2(global, x, w);
+		raycasting3(global);
+		raycasting4(global);
+		raycasting5(global);
+		raycasting6(global);
+		raycasting7(global, x, y);
+		global->sprite.z_buffer[x] = global->player.perpwalldist;
 		x++;
 	}
 	ft_ray_sprite(global);
-	mlx_put_image_to_window(global->data.mlx, global->data.win, global->data.img, 0, 0);
+	mlx_put_image_to_window(global->data.mlx, global->data.win,
+	global->data.img, 0, 0);
+	key_move(global);
 	return (1);
 }
 
-int main (int argc, char **argv)
+void				raycasting2(t_global *global, int x, int w)
+{
+	global->player.camera_x = 2 * x / (double)w - 1;
+	global->player.ray_dir_x = global->player.dir_x + global->player.plane_x
+	* global->player.camera_x;
+	global->player.ray_dir_y = global->player.dir_y + global->player.plane_y
+	* global->player.camera_x;
+	global->player.map_x = (int)global->player.pos_x;
+	global->player.map_y = (int)global->player.pos_y;
+	global->player.delta_dist_x = fabs(1 / global->player.ray_dir_x);
+	global->player.delta_dist_y = fabs(1 / global->player.ray_dir_y);
+	global->player.hit = 0;
+}
+
+void				raycasting3(t_global *global)
+{
+	if (global->player.ray_dir_x < 0)
+	{
+		global->player.step_x = -1;
+		global->player.side_dist_x = (global->player.pos_x -
+		global->player.map_x) * global->player.delta_dist_x;
+	}
+	else
+	{
+		global->player.step_x = 1;
+		global->player.side_dist_x = (global->player.map_x + 1.0 -
+		global->player.pos_x) * global->player.delta_dist_x;
+	}
+	if (global->player.ray_dir_y < 0)
+	{
+		global->player.step_y = -1;
+		global->player.side_dist_y = (global->player.pos_y -
+		global->player.map_y) * global->player.delta_dist_y;
+	}
+	else
+	{
+		global->player.step_y = 1;
+		global->player.side_dist_y = (global->player.map_y + 1.0 -
+		global->player.pos_y) * global->player.delta_dist_y;
+	}
+}
+
+void				raycasting4(t_global *global)
+{
+	while (global->player.hit == 0)
+	{
+		if (global->player.side_dist_x < global->player.side_dist_y)
+		{
+			global->player.side_dist_x += global->player.delta_dist_x;
+			global->player.map_x += global->player.step_x;
+			global->player.side = 0;
+		}
+		else
+		{
+			global->player.side_dist_y += global->player.delta_dist_y;
+			global->player.map_y += global->player.step_y;
+			global->player.side = 1;
+		}
+		if (global->mapa.memoria[global->player.map_x]
+		[global->player.map_y] == '1')
+			global->player.hit = 1;
+	}
+}
+
+int					main(int argc, char **argv)
 {
 	t_global global;
-	ft_init_structs(&global); // Inicializar valores
+
+	ft_init_structs(&global);
 	ft_init_structs2(&global);
 	ft_parseo(&global, argv);
-	
-	global.data.mlx		= mlx_init();
-	global.data.win		= mlx_new_window(global.data.mlx, global.mapa.width, global.mapa.height, "Cub3D");
-	global.data.img		= mlx_new_image(global.data.mlx, global.mapa.width, global.mapa.height);
-	global.data.addr	= mlx_get_data_addr(global.data.img, &global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
-
-	ft_fill_texture(&global); // Obtener texturas
+	global.data.mlx = mlx_init();
+	global.data.win = mlx_new_window(global.data.mlx, global.mapa.width,
+	global.mapa.height, "Cub3D");
+	global.data.img = mlx_new_image(global.data.mlx, global.mapa.width,
+	global.mapa.height);
+	global.data.addr = mlx_get_data_addr(global.data.img,
+	&global.data.bits_per_pixel, &global.data.line_lenght, &global.data.endian);
+	ft_fill_texture(&global);
 	ft_control_error(&global, argc, argv);
-	mlx_hook(global.data.win, 02, (0L<<0), key_move, &global);
-	mlx_hook(global.data.win, 03, (0L<<0), key_move, &global);
-	mlx_hook(global.data.win, 17, (17L<<0), ft_exit, &global);
+	mlx_hook(global.data.win, 02, (0L << 0), key_press, &global);
+	mlx_hook(global.data.win, 03, (0L << 0), key_release, &global);
+	mlx_hook(global.data.win, 17, (17L << 0), ft_exit, &global);
 	mlx_loop_hook(global.data.mlx, raycasting, &global);
 	mlx_loop(global.data.mlx);
 }

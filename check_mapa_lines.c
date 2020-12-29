@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 12:20:12 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/27 16:33:44 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/29 17:05:51 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,17 @@ void		ft_nswe(t_global *global)
 {
 	if (global->player.nswe == 'N')
 	{
-		global->player.dirX = -1;
-		global->player.dirY = 0.0;
-		global->player.planeX = 0.0;
-		global->player.planeY = 0.66;
+		global->player.dir_x = -1;
+		global->player.dir_y = 0.0;
+		global->player.plane_x = 0.0;
+		global->player.plane_y = 0.66;
 	}
 	else if (global->player.nswe == 'S')
 	{
-		global->player.dirX = 1;
-		global->player.dirY = 0.0;
-		global->player.planeX = 0.0;
-		global->player.planeY = -0.66;
+		global->player.dir_x = 1;
+		global->player.dir_y = 0.0;
+		global->player.plane_x = 0.0;
+		global->player.plane_y = -0.66;
 	}
 	else if (global->player.nswe == 'W')
 		ft_nswe_complemento(global);

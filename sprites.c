@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:17:29 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/28 15:07:27 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/29 17:05:48 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void			ft_sort_sprites(t_global *global)
 	while (++i < global->sprite.num)
 	{
 		global->sprite.distance = sqrt((pow(global->xysp[i].x -
-		global->player.posX, 2.0)) + pow(global->xysp[i].y
-		- global->player.posY, 2.0));
+		global->player.pos_x, 2.0)) + pow(global->xysp[i].y
+		- global->player.pos_y, 2.0));
 		global->xysp[i].rel = global->sprite.distance;
 	}
 	ft_sort_sprites2(global);
@@ -78,9 +78,9 @@ void			ft_ray_sprite(t_global *global)
 	while (++i < global->sprite.num)
 	{
 		global->sprite.order[i] = i;
-		global->xysp[i].rel = ((global->player.posY - global->xysp[i].y) *
-		(global->player.posY - global->xysp[i].y) + (global->player.posX -
-		global->xysp[i].x) * (global->player.posX - global->xysp[i].x));
+		global->xysp[i].rel = ((global->player.pos_y - global->xysp[i].y) *
+		(global->player.pos_y - global->xysp[i].y) + (global->player.pos_x -
+		global->xysp[i].x) * (global->player.pos_x - global->xysp[i].x));
 	}
 	ft_sort_sprites(global);
 	i = -1;
@@ -98,15 +98,15 @@ void			ft_ray_sprite(t_global *global)
 void			ft_ray_sprite2(t_global *global, int i)
 {
 	global->sprite.x = global->xysp[global->sprite.order[i]].x
-	- global->player.posX;
+	- global->player.pos_x;
 	global->sprite.y = global->xysp[global->sprite.order[i]].y
-	- global->player.posY;
-	global->sprite.inv_det = 1.0 / (global->player.planeX *
-	global->player.dirY - global->player.dirX * global->player.planeY);
-	global->sprite.transform_x = global->sprite.inv_det * (global->player.dirY
-	* global->sprite.x - global->player.dirX * global->sprite.y);
+	- global->player.pos_y;
+	global->sprite.inv_det = 1.0 / (global->player.plane_x *
+	global->player.dir_y - global->player.dir_x * global->player.plane_y);
+	global->sprite.transform_x = global->sprite.inv_det * (global->player.dir_y
+	* global->sprite.x - global->player.dir_x * global->sprite.y);
 	global->sprite.transform_y = global->sprite.inv_det *
-	(-global->player.planeY * global->sprite.x + global->player.planeX
+	(-global->player.plane_y * global->sprite.x + global->player.plane_x
 	* global->sprite.y);
 	global->sprite.sprite_screen_x = (int)(global->mapa.width / 2)
 	* (1 + global->sprite.transform_x / global->sprite.transform_y);
