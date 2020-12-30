@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:36 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/29 19:11:40 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/30 12:34:49 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define ESCAPE					53
 # define ER1 "Argumento inválido : Revisa que el archivo termine en \".cub\"."
 # define ER2 "Argumento inválido : Prueba escribiendo \"--save\"."
+# define ALPN "abcdefghiklmnñopqrstuvwxyx0123456789ABCDEFGHIGKLMNÑOPQRSTUVWXYZ"
 
 typedef struct		s_data
 {

@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 14:21:27 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/29 17:05:47 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/30 12:40:58 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ void			ft_check_lines2(t_global *global, char *line, int i)
 		if (ft_isascii(line[i]))
 			ft_print_error("Hay un carácter inválido despúes del mapa");
 	}
+	else if (ft_strchr(ALPN, line[i]))
+		if (line[i] != '\0' && line[i] != ' ')
+			ft_print_error("Carácter inválido en la sección de texturas");
 }
 
 int				ft_exit(t_global *global)
