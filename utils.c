@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:06:16 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/29 18:49:44 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/30 19:23:23 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int				ft_check_lines(t_global *global, char *line)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
+	if (global->mapa.xpvu > 0 || global->mapa.old > 0)
+	{
+		if (line[i] == ' ' || line[i] == '0' ||
+				line[i] == '1' || line[i] == '2')
+			ft_check_map(global, line);
+		else if (line[i] == '\0')
+			ft_print_error("Mapa separado por saltos de línea");
+		else if (ft_isascii(line[i]))
+			ft_print_error("Hay un carácter inválido despúes del mapa");
+	}
 	if (line[i] == 'R' && line[i + 1] == ' ')
 	{
 		global->mapa.tmp1 = line;

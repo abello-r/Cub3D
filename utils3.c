@@ -6,7 +6,7 @@
 /*   By: abello-r <abello-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 14:21:27 by abello-r          #+#    #+#             */
-/*   Updated: 2020/12/30 12:40:58 by abello-r         ###   ########.fr       */
+/*   Updated: 2020/12/30 19:20:06 by abello-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,6 @@ void			ft_check_lines2(t_global *global, char *line, int i)
 	else if (line[i] == ' ' || line[i] == '0'
 		|| line[i] == '1' || line[i] == '2')
 		ft_check_map(global, line);
-	else if (global->mapa.xpvu > 0 || global->mapa.old > 0)
-	{
-		if (line[i] == '\0')
-			ft_print_error("Mapa separado por saltos de línea");
-		if (ft_isascii(line[i]))
-			ft_print_error("Hay un carácter inválido despúes del mapa");
-	}
 	else if (ft_strchr(ALPN, line[i]))
 		if (line[i] != '\0' && line[i] != ' ')
 			ft_print_error("Carácter inválido en la sección de texturas");
