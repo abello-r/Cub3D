@@ -1,1 +1,0 @@
-while true; do leaks cub3D; sleep 0.2; done
