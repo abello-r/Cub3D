@@ -1,12 +1,12 @@
-R 400 350
+R 1400 1350
 NO srcs/lavaboy.xpm
-SO srcs/bloque.xpm
+SO srcs/purplestone.xpm
 EA srcs/flor.xpm
 S srcs/miguelito.xpm
 WE srcs/puerta.xpm
 
-C 42,42,42
-F 10,20,15
+C 0,0,255
+F 0,60,0
 
                                          11111111111111111
 11111111              11111              10000000000000001

@@ -4,6 +4,9 @@ SRC= $(GNL) cub3d.c raycasting.c mov_rot.c texturas.c utils.c utils2.c utils3.c 
 SRC+= 
 OBJ1=$(SRC:.c=.o)
 OBJ=$(OBJ1:.m=.o)
+CC= gcc
+CFLAGS= -Wall -Werror -Wextra
+
 
 $(NAME):	$(OBJ)
 	@make -sC ./libft/
@@ -15,7 +18,7 @@ run:
 	@clear
 	@echo "\n\033[32m"*------------------------------------------------------------------------------------*\\nTienes ejecutando los archivos :" \033[33m"$(SRC) libft.a"\033[0m\n"
 	@echo "\n\033[32m"Pulsa \(ESCAPE\) para detener.\\n*------------------------------------------------------------------------------------*"\033[0m\n"
-	@gcc -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a -o cub3D
+	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $(SRC) libft.a -o cub3D
 	@rm -rf cub3D.dSYM
 
 all: $(NAME)
