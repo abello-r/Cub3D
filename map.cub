@@ -2,8 +2,8 @@ R 1400 1350
 NO srcs/lavaboy.xpm
 SO srcs/purplestone.xpm
 EA srcs/flor.xpm
-S srcs/miguelito.xpm
 WE srcs/puerta.xpm
+S srcs/miguelito.xpm
 
 C 0,0,255
 F 0,60,0
