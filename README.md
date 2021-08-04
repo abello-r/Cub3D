@@ -1,6 +1,17 @@
-El fichero init.sh está creado para facilitar el uso del programa.
+# How to execute the program ?
 
-* Para iniciar sólo tienes que ejecutar "bash init.sh" en la terminal.
-* Para salir, presiona la tecla "ESC".
-* La carpeta "SRC" contiene las texturas y sprites usados en el programa.
-![alt text](https://github.com/abello-r/Cub3D/blob/master/srcs/img.png)
+1- ```git clone https://github.com/abello-r/Cub3D.git ; cd Cub3D```
+
+2- ```bash init.sh```
+
+3- to escape, just press the ESC key
+
+![alt text](https://github.com/abello-r/Cub3D/blob/master/srcs/miguelito.png)
+
+![alt text](https://github.com/abello-r/Cub3D/blob/master/srcs/mago.png)
+
+# Configuration
+
+## You can modify "map.cub" file, and write a new map, with new textures and new sprites.
+
+![alt text](https://github.com/abello-r/Cub3D/blob/master/srcs/config.png)
